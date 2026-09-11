@@ -25,6 +25,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "django_filters",
     "django_vite",
+    "django_tinymce",
 ]
 
 USER_DEFINED_APPS = [
