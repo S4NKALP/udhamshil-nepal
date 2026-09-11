@@ -1,0 +1,49 @@
+"""generated with djinit"""
+
+from .base import *  # noqa: F401, F403
+
+SECRET_KEY = "bUD+1$5)NUfhrNiYfKEeX#JSz*Crzw78O2@O(rr@o#t5ehQ3tY"
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ["*"]
+
+# Database
+# https://docs.djangoproject.com/en/6.1/ref/settings/#databases
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+        "OPTIONS": {
+            "transaction_mode": "IMMEDIATE",
+            "timeout": 5,  # seconds
+            "init_command": """
+                PRAGMA journal_mode=WAL;
+                PRAGMA synchronous=NORMAL;
+                PRAGMA mmap_size = 134217728;
+                PRAGMA journal_size_limit = 27103364;
+                PRAGMA cache_size=2000;
+            """,
+        },
+    }
+}
+
+# Email settings for development
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.console.EmailBackend",
+    },
+}
+
+# CORS settings for development
+# Allow all origins in development (convenient but not secure)
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+# Disable HTTPS redirect in development
+SECURE_SSL_REDIRECT = False
+
+# Vite Settings
+DJANGO_VITE["default"]["dev_mode"] = True
