@@ -3,7 +3,6 @@ generated with djinit
 Common settings shared between development and production environment
 """
 
-from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -25,7 +24,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "django_filters",
     "django_vite",
-    "django_tinymce",
+    "tinymce",
 ]
 
 USER_DEFINED_APPS = [
@@ -130,20 +129,16 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.JSONParser",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
-    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 20,
-}
-
-# JWT Settings
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ],
 }
 
 # CORS Settings
@@ -180,4 +175,61 @@ DJANGO_VITE = {
         "manifest_path": BASE_DIR / "static" / "dist" / "manifest.json",
         "static_url_prefix": "dist",
     }
+}
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Udhamshi Nepal Admin",
+    "site_header": "Udhamshi Nepal",
+    "site_brand": "Udhamshi Nepal",
+    "welcome_sign": "Welcome to the Udhamshi Nepal Admin",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "order_with_respect_to": [
+        "website_content",
+        "website_content.HeroSection",
+        "website_content.Stats",
+        "website_content.MarqueeService",
+        "about_company",
+        "about_company.Organization",
+        "about_company.AboutUs",
+        "about_company.Vision",
+        "about_company.Mision",
+        "about_company.Values",
+        "about_company.WhatWeDo",
+        "about_company.OurService",
+        "about_company.Patner",
+        "about_company.SisterCompanies",
+        "careers",
+        "products_catalog",
+        "projects_events",
+        "our_team",
+        "testimonials",
+        "contact_messages",
+    ],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "website_content.HeroSection": "fas fa-images",
+        "website_content.Stats": "fas fa-chart-line",
+        "website_content.MarqueeService": "fas fa-stream",
+        "about_company.Organization": "fas fa-building",
+        "about_company.AboutUs": "fas fa-info-circle",
+        "about_company.Vision": "fas fa-eye",
+        "about_company.Mision": "fas fa-bullseye",
+        "about_company.Values": "fas fa-award",
+        "about_company.WhatWeDo": "fas fa-handshake",
+        "about_company.OurService": "fas fa-concierge-bell",
+        "about_company.Patner": "fas fa-users",
+        "about_company.SisterCompanies": "fas fa-layer-group",
+        "careers.Career": "fas fa-briefcase",
+        "products_catalog.Product": "fas fa-box",
+        "projects_events.Project": "fas fa-lightbulb",
+        "projects_events.Events": "fas fa-calendar-check",
+        "our_team.Team": "fas fa-user-friends",
+        "testimonials.Testimonial": "fas fa-comments",
+        "contact_messages.Contact": "fas fa-envelope",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
 }

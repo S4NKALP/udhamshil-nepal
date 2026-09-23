@@ -50,4 +50,4 @@ ignore = [
 known-first-party = ["."]
 
 [tool.ruff.lint.per-file-ignores]
-"./settings/*.py" = ["F403", "F405"]
+"app/settings/*.py" = ["F403", "F405"]
