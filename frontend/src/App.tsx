@@ -11,8 +11,9 @@ import ProjectsEvents from './pages/Projects-events';
 import Team from './pages/Team';
 
 export default function App() {
+  const basename = import.meta.env.VITE_ROUTER_BASENAME || (window.location.pathname.startsWith('/static/frontend') ? '/static/frontend' : '/');
   return (
-    <BrowserRouter basename="/static/frontend/">
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Index />} />

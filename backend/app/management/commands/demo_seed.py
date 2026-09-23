@@ -1,5 +1,7 @@
+import os
+import shutil
 from datetime import time
-
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
@@ -26,16 +28,25 @@ from app.models import (
     WhatWeDo,
 )
 
-
 class Command(BaseCommand):
-    help = "Seed demo data for all models (all fields, including optional ones)."
+    help = "Seed demo data using real frontend content and images."
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            "--flush",
-            action="store_true",
-            help="Delete existing data before seeding.",
-        )
+        parser.add_argument("--flush", action="store_true", help="Delete existing data before seeding.")
+
+    def _copy_image(self, src_filename, dest_subpath):
+        """
+        Copy an image from frontend/src/assets to media/dest_subpath.
+        Returns the relative path for the ImageField, or None if not found.
+        """
+        src_path = os.path.join(settings.BASE_DIR, "..", "frontend", "src", "assets", src_filename)
+        if not os.path.exists(src_path):
+            return None
+            
+        dest_full_path = os.path.join(settings.MEDIA_ROOT, dest_subpath)
+        os.makedirs(os.path.dirname(dest_full_path), exist_ok=True)
+        shutil.copy2(src_path, dest_full_path)
+        return dest_subpath
 
     def handle(self, *args, **options):
         if options["flush"]:
@@ -47,31 +58,10 @@ class Command(BaseCommand):
         for label, count in created:
             self.stdout.write(self.style.SUCCESS(f"{label}: {count}"))
 
-        self.stdout.write(self.style.SUCCESS("Demo seed complete."))
+        self.stdout.write(self.style.SUCCESS("Real data seed complete."))
 
     def _flush(self):
-        models = [
-            ProductFeatures,
-            Product,
-            Project,
-            Events,
-            Career,
-            Contact,
-            Team,
-            Testimonial,
-            HeroSection,
-            Stats,
-            MarqueeService,
-            AboutUs,
-            Vision,
-            Mision,
-            Values,
-            WhatWeDo,
-            Patner,
-            SisterCompanies,
-            OurService,
-            Organization,
-        ]
+        models = [ProductFeatures, Product, Project, Events, Career, Contact, Team, Testimonial, HeroSection, Stats, MarqueeService, AboutUs, Vision, Mision, Values, WhatWeDo, Patner, SisterCompanies, OurService, Organization]
         for model in models:
             model.objects.all().delete()
         self.stdout.write(self.style.WARNING("Existing data flushed."))
@@ -79,269 +69,252 @@ class Command(BaseCommand):
     def _seed(self):
         created = []
 
-        # --- Organization (singleton) ---
-        org, org_created = Organization.objects.get_or_create(
+        # --- Organization ---
+        org, _ = Organization.objects.get_or_create(
             pk=Organization.SINGLETON_PK,
             defaults={
-                "name": "Udhamshil Nepal",
-                "short_intro": "Empowering youth through skill development and employment opportunities in Nepal.",
-                "logo": "institue/demo-logo.png",
-                "address": "Kathmandu, Nepal",
-                "phone_number": "9800000001",
-                "telephone_number": "01-4000001",
-                "primary_email": "info@udhamshilnepal.com",
-                "secondary_email": "contact@udhamshilnepal.com",
-                "whatsapp_no": "9800000002",
-                "facebook": "https://facebook.com/udhamshilnepal",
-                "tiktok": "https://tiktok.com/@udhamshilnepal",
-                "instagram": "https://instagram.com/udhamshilnepal",
-                "youtube": "https://youtube.com/@udhamshilnepal",
-                "linkedin": "https://linkedin.com/company/udhamshilnepal",
-                "working_hour": "Sunday – Friday, 10AM to 6PM",
-                "google_map_link": "https://maps.google.com/?q=Kathmandu+Nepal",
+                "name": "Udhamsil Nepal",
+                "short_intro": "Prominent exporter, manufacturer, distributor and supplier of small scale, medium scale and commercial machinery in Nepal.",
+                "address": "Kohalpur-11, Banke\nLumbini Province, Nepal",
+                "phone_number": "9800000000",
+                "telephone_number": "081-000000",
+                "primary_email": "info@udhamsilnepal.com",
+                "working_hour": "Sunday – Friday, 9:00 – 18:00",
             },
         )
-        created.append(("Organization", 1 if org_created else 0))
+        created.append(("Organization", 1))
 
         # --- Products + Features ---
-        products = []
-        for i in range(1, 4):
-            product, _ = Product.objects.get_or_create(
-                name=f"Demo Product {i}",
-                defaults={"image": f"products/demo-product-{i}.png"},
-            )
-            products.append(product)
-        created.append(("Product", len(products)))
-
-        features = []
-        for product in products:
-            for j in range(1, 3):
-                feature, _ = ProductFeatures.objects.get_or_create(
-                    product=product,
-                    name=f"Feature {j} of {product.name}",
-                )
-                features.append(feature)
-        created.append(("ProductFeatures", len(features)))
+        product_data = [
+            ("Small Scale", "product-small.jpg", ["Mini milling machines", "Grain grinders", "Oil expellers", "Bench drills"]),
+            ("Medium Scale", "product-medium.jpg", ["Food processing lines", "Dough & noodle plants", "Filling machines", "Dryers"]),
+            ("Commercial", "product-commercial.jpg", ["Automated packaging lines", "Cold storage units", "Conveyor systems", "Boilers"]),
+        ]
+        
+        p_count = 0
+        pf_count = 0
+        for name, img, feats in product_data:
+            img_path = self._copy_image(img, f"products/{img}")
+            prod, _ = Product.objects.get_or_create(name=name, defaults={"image": img_path})
+            p_count += 1
+            for f in feats:
+                ProductFeatures.objects.get_or_create(product=prod, name=f)
+                pf_count += 1
+        created.append(("Product", p_count))
+        created.append(("ProductFeatures", pf_count))
 
         # --- Projects ---
-        projects = []
-        for i in range(1, 4):
-            project, _ = Project.objects.get_or_create(
-                name=f"Demo Project {i}",
-                defaults={
-                    "image": f"projects/demo-project-{i}.png",
-                    "short_info": f"Short summary for demo project {i}.",
-                    "details": f"<p>Detailed HTML description for demo project {i}.</p>",
-                    "organization": "Udhamshil Nepal",
-                },
-            )
-            projects.append(project)
-        created.append(("Project", len(projects)))
+        proj, _ = Project.objects.get_or_create(
+            name="Commercial food line, Banke",
+            defaults={
+                "image": self._copy_image("product-medium.jpg", "projects/commercial-food.jpg"),
+                "short_info": "Supplied and commissioned a full processing line for a regional food producer.",
+                "details": "<p>Supplied and commissioned a full processing line for a regional food producer. (2023)</p>",
+                "organization": "Regional Food Producer",
+            }
+        )
+        proj2, _ = Project.objects.get_or_create(
+            name="Cooperative mill programme",
+            defaults={
+                "image": self._copy_image("workshop.jpg", "projects/coop-mill.jpg"),
+                "short_info": "Distributed small-scale milling units to farming cooperatives across the Terai.",
+                "details": "<p>Distributed small-scale milling units to farming cooperatives across the Terai. (2022)</p>",
+                "organization": "Farming Cooperatives",
+            }
+        )
+        created.append(("Project", 2))
 
         # --- Events ---
-        events = []
-        for i in range(1, 4):
-            event, _ = Events.objects.get_or_create(
-                name=f"Demo Event {i}",
-                defaults={
-                    "image": f"events/demo-event-{i}.png",
-                    "short_info": f"Short summary for demo event {i}.",
-                    "details": f"<p>Detailed HTML description for demo event {i}.</p>",
-                    "organization": "Udhamshil Nepal",
-                },
-            )
-            events.append(event)
-        created.append(("Events", len(events)))
+        evt, _ = Events.objects.get_or_create(
+            name="National industry expo",
+            defaults={
+                "image": self._copy_image("product-commercial.jpg", "events/expo-2024.jpg"),
+                "short_info": "Showcased our packaging and cold-storage range to buyers from across Nepal.",
+                "details": "<p>Showcased our packaging and cold-storage range to buyers from across Nepal. (2024)</p>",
+                "organization": "National Expo",
+            }
+        )
+        created.append(("Events", 1))
 
         # --- Careers ---
-        careers = []
-        for i in range(1, 4):
-            career, _ = Career.objects.get_or_create(
-                name=f"Demo Career {i}",
+        career_data = [
+            (
+                "Workshop Machinist", "Assembly, fitting and finishing of machinery units at our Kohalpur workshop.",
+                "Full-time · Sun–Fri", "Kohalpur-11, Banke, Nepal", 
+                "<h3>About</h3><p>You will work hands-on with small, medium and commercial machinery units — from receiving components to final quality checks before dispatch. Precision and care for finish matter more than speed.</p><h3>Responsibilities</h3><ul><li>Assemble and fit machinery components</li><li>Perform finishing, alignment and calibration</li><li>Run pre-dispatch quality and safety checks</li><li>Maintain workshop tools</li><li>Report material defects</li></ul>"
+            ),
+            (
+                "Field Service Engineer", "Installation, commissioning and maintenance at customer sites across the country.",
+                "Full-time · Field-based", "Customer sites across Nepal", 
+                "<h3>About</h3><p>You will be the face of Udhamsil Nepal at customer sites — installing machines, training operators, and keeping equipment running. Expect regular travel and direct responsibility for customer satisfaction.</p><h3>Responsibilities</h3><ul><li>Install and commission machinery</li><li>Diagnose and repair mechanical and electrical faults</li><li>Train operators</li><li>Keep service records</li></ul>"
+            ),
+            (
+                "Sales & Distribution Officer", "Dealer relationships, quotations and order follow-up across Lumbini Province.",
+                "Full-time · Office + dealer visits", "Kohalpur, Banke", 
+                "<h3>About</h3><p>You will grow our dealer and distribution network, prepare quotations, and make sure orders move smoothly from enquiry to delivery.</p><h3>Responsibilities</h3><ul><li>Manage dealer relationships</li><li>Prepare quotations and invoices</li><li>Follow up orders</li><li>Track territory sales</li></ul>"
+            ),
+        ]
+        
+        c_count = 0
+        for name, info, jtime, loc, html in career_data:
+            Career.objects.get_or_create(
+                name=name,
                 defaults={
-                    "short_info": f"Short info for demo career position {i}.",
-                    "job_time": "Full Time" if i % 2 else "Part Time",
-                    "location": "Kathmandu, Nepal",
+                    "short_info": info,
+                    "job_time": jtime,
+                    "location": loc,
                     "deadline": time(17, 0, 0),
-                    "details": f"<p>Job details HTML for demo career {i}.</p>",
-                },
+                    "details": html
+                }
             )
-            careers.append(career)
-        created.append(("Career", len(careers)))
-
-        # --- Contacts ---
-        contacts = []
-        for i in range(1, 4):
-            contact, _ = Contact.objects.get_or_create(
-                name=f"Demo Contact {i}",
-                subject=f"Demo Inquiry {i}",
-                defaults={
-                    "phone_no": f"98000000{i:02d}",
-                    "email": f"demo{i}@example.com",
-                    "message": f"This is demo contact message number {i}.",
-                },
-            )
-            contacts.append(contact)
-        created.append(("Contact", len(contacts)))
+            c_count += 1
+        created.append(("Career", c_count))
 
         # --- Team ---
-        teams = []
-        for i in range(1, 4):
-            team, _ = Team.objects.get_or_create(
-                name=f"Demo Member {i}",
-                position=f"Demo Position {i}",
+        team_data = [
+            ("Managing Director", "Leads trade partnerships and company strategy."),
+            ("Head of Engineering", "Oversees machine specification, testing and build quality."),
+            ("Production Manager", "Runs the Kohalpur assembly floor and delivery schedule."),
+            ("Import & Export Lead", "Handles sourcing, customs and cross-border logistics."),
+            ("Service Engineer", "Field installation, commissioning and preventive maintenance."),
+            ("Customer Support", "First point of contact for parts, training and warranty."),
+        ]
+        t_count = 0
+        for role, copy in team_data:
+            Team.objects.get_or_create(
+                name=role,
+                position=role,
                 defaults={
-                    "image": f"team/demo-member-{i}.png",
-                    "short_intro": f"Short intro for demo team member {i}.",
-                    "bio": f"<p>Biography HTML for demo team member {i}.</p>",
-                    "phone_no": f"98000001{i:02d}",
-                    "email": f"member{i}@udhamshilnepal.com",
-                },
+                    "short_intro": copy,
+                    "bio": f"<p>{copy}</p>"
+                }
             )
-            teams.append(team)
-        created.append(("Team", len(teams)))
+            t_count += 1
+        created.append(("Team", t_count))
 
         # --- Testimonials ---
-        testimonials = []
-        for i in range(1, 4):
-            testimonial, _ = Testimonial.objects.get_or_create(
-                name=f"Demo Testimonial {i}",
+        test_data = [
+            ("Food processing operator", "Lumbini Province", "The team understood our production target, recommended the right capacity and stayed involved through installation."),
+            ("Manufacturing business owner", "Karnali Province", "Clear advice and dependable after-sales support made upgrading our workshop far easier than expected."),
+            ("Commercial project manager", "Sudurpashchim Province", "Our equipment arrived prepared for work, and the operators received practical guidance from day one."),
+        ]
+        test_count = 0
+        for name, org_name, quote in test_data:
+            Testimonial.objects.get_or_create(
+                name=name,
                 defaults={
-                    "image": f"testimonials/demo-testimonial-{i}.png",
-                    "testimonial": f"This is demo testimonial text number {i}.",
-                    "organization": f"Demo Organization {i}",
-                },
+                    "organization": org_name,
+                    "testimonial": quote
+                }
             )
-            testimonials.append(testimonial)
-        created.append(("Testimonial", len(testimonials)))
+            test_count += 1
+        created.append(("Testimonial", test_count))
 
         # --- HeroSection ---
-        hero, hero_created = HeroSection.objects.get_or_create(
-            title="Welcome to Udhamshil Nepal",
+        HeroSection.objects.get_or_create(
+            title="Machinery built for",
             defaults={
-                "subtitle": "Building futures together",
-                "hero_section": "<p>Demo hero section HTML content.</p>",
-                "cover_image": "hero/demo-hero.png",
-            },
+                "subtitle": "Est. 2020 · Kohalpur, Banke",
+                "hero_section": "Nepal.", # We map this to highlight
+                "cover_image": self._copy_image("hero-machinery.jpg", "hero/hero-machinery.jpg"),
+            }
         )
-        created.append(("HeroSection", 1 if hero_created else 0))
+        created.append(("HeroSection", 1))
 
         # --- Stats ---
         stats_data = [
-            ("Projects Completed", 250),
-            ("Youth Trained", 1200),
-            ("Partner Organizations", 45),
+            ("Machines supplied", 250),
+            ("Districts served", 40),
+            ("On-time delivery", 98),
         ]
-        stats_count = 0
-        for title, value in stats_data:
-            _, s_created = Stats.objects.get_or_create(
-                title=title, defaults={"stats": value}
-            )
-            stats_count += 1 if s_created else 0
-        created.append(("Stats", stats_count))
+        for label, val in stats_data:
+            Stats.objects.get_or_create(title=label, defaults={"stats": val})
+        created.append(("Stats", 3))
 
         # --- MarqueeService ---
-        marquee_titles = [
-            "Skill Development",
-            "Employment Support",
-            "Youth Empowerment",
-            "Community Building",
-        ]
-        marquee_count = 0
-        for title in marquee_titles:
-            _, m_created = MarqueeService.objects.get_or_create(title=title)
-            marquee_count += 1 if m_created else 0
-        created.append(("MarqueeService", marquee_count))
-
-        # --- AboutUs ---
-        about, about_created = AboutUs.objects.get_or_create(
-            title="About Us",
-            defaults={
-                "subtitle": "Who we are",
-                "about_us": "<p>Demo about us HTML content.</p>",
-                "cover_image": "aboutus/demo-about.png",
-            },
-        )
-        created.append(("AboutUs", 1 if about_created else 0))
-
-        # --- Vision ---
-        vision, vision_created = Vision.objects.get_or_create(
-            title="Our Vision",
-            defaults={
-                "subtitle": "Where we are heading",
-                "vision": "<p>Demo vision HTML content.</p>",
-                "cover_image": "vision/demo-vision.png",
-            },
-        )
-        created.append(("Vision", 1 if vision_created else 0))
-
-        # --- Mision ---
-        mision, mision_created = Mision.objects.get_or_create(
-            title="Our Mision",
-            defaults={
-                "subtitle": "What we do daily",
-                "mision": "<p>Demo mision HTML content.</p>",
-                "cover_image": "mision/demo-mision.png",
-            },
-        )
-        created.append(("Mision", 1 if mision_created else 0))
-
-        # --- Values ---
-        values, values_created = Values.objects.get_or_create(
-            title="Our Values",
-            defaults={
-                "subtitle": "What we stand for",
-                "values": "<p>Demo values HTML content.</p>",
-                "cover_image": "values/demo-values.png",
-            },
-        )
-        created.append(("Values", 1 if values_created else 0))
+        for m in ["Export", "Manufacture", "Distribute", "Supply", "Service"]:
+            MarqueeService.objects.get_or_create(title=m)
+        created.append(("MarqueeService", 5))
 
         # --- WhatWeDo ---
-        whatwedo, whatwedo_created = WhatWeDo.objects.get_or_create(
-            title="What We Do",
-            defaults={
-                "subtitle": "Our core activities",
-                "what_we_do": "<p>Demo what we do HTML content.</p>",
-                "cover_image": "whatwedo/demo-whatwedo.png",
-            },
-        )
-        created.append(("WhatWeDo", 1 if whatwedo_created else 0))
+        wwd_data = [
+            ("Small Scale", "Compact units for households and micro-enterprises — easy to install, simple to maintain.", "product-small.jpg"),
+            ("Medium Scale", "Production lines for growing workshops, balancing output with reliable uptime.", "product-medium.jpg"),
+            ("Commercial", "Heavy-duty industrial equipment engineered for continuous, high-volume operation.", "product-commercial.jpg"),
+        ]
+        for t, c, i in wwd_data:
+            WhatWeDo.objects.get_or_create(
+                title=t, 
+                defaults={
+                    "what_we_do": f"<p>{c}</p>",
+                    "cover_image": self._copy_image(i, f"whatwedo/{i}")
+                }
+            )
+        created.append(("WhatWeDo", 3))
 
         # --- Patner ---
-        patners = []
-        for i in range(1, 4):
-            patner, _ = Patner.objects.get_or_create(
-                name=f"Demo Partner {i}",
-                defaults={"logo": f"patner/demo-partner-{i}.png"},
-            )
-            patners.append(patner)
-        created.append(("Patner", len(patners)))
+        patners = ["Agro Processing", "Food Production", "Cold Storage", "Construction", "Energy & Utilities", "Local Enterprise"]
+        for p in patners:
+            Patner.objects.get_or_create(name=p)
+        created.append(("Patner", 6))
 
         # --- SisterCompanies ---
-        sisters = []
-        for i in range(1, 4):
-            sister, _ = SisterCompanies.objects.get_or_create(
-                name=f"Demo Sister Company {i}",
-                defaults={
-                    "logo": f"sistercompanies/demo-sister-{i}.png",
-                    "website_link": f"https://demo-sister-{i}.com",
-                },
-            )
-            sisters.append(sister)
-        created.append(("SisterCompanies", len(sisters)))
+        sisters = [
+            ("Udhamsil Agro Systems", "Mechanisation and processing solutions for Nepal's growing agro-enterprises."),
+            ("Udhamsil Energy Solutions", "Efficient power and utility systems for productive, resilient operations."),
+            ("Udhamsil Industrial Services", "Installation, maintenance and technical support across the machinery lifecycle."),
+        ]
+        for name, copy in sisters:
+            SisterCompanies.objects.get_or_create(name=name, defaults={"website_link": ""})
+        created.append(("SisterCompanies", 3))
 
         # --- OurService ---
-        services = []
-        for i in range(1, 4):
-            service, _ = OurService.objects.get_or_create(
-                name=f"Demo Service {i}",
-                defaults={
-                    "image": f"ourservice/demo-service-{i}.png",
-                    "description": f"<p>Demo service description HTML for service {i}.</p>",
-                },
-            )
-            services.append(service)
-        created.append(("OurService", len(services)))
+        services_data = [
+            ("Understand", "We map your output, space, power and budget."),
+            ("Specify", "We match the right machine and configuration."),
+            ("Deliver", "We coordinate supply, setup and operator guidance."),
+            ("Support", "We stay available for parts and maintenance."),
+        ]
+        for name, desc in services_data:
+            OurService.objects.get_or_create(name=name, defaults={"description": f"<p>{desc}</p>"})
+        created.append(("OurService", 4))
+        
+        # --- About Us (Story, Vision, Mission, Values) ---
+        AboutUs.objects.get_or_create(
+            title="Our story",
+            defaults={
+                "about_us": "<p>Established in 2020 and based in Kohalpur-11, Banke, we began by supplying compact machinery to local enterprises. Today we cover the full range — from small workshop units to full commercial production lines — for customers across the country.</p><p>Our mission is to provide reliable and innovative machinery solutions: equipment that arrives ready to work, backed by people who know how to keep it running.</p>",
+                "cover_image": self._copy_image("workshop.jpg", "about/workshop.jpg")
+            }
+        )
+        created.append(("AboutUs", 1))
+
+        Vision.objects.get_or_create(
+            title="Where we are heading",
+            defaults={
+                "subtitle": "From Kohalpur to every district, we aim to set the standard for what Nepali businesses can expect from their machinery supplier: dependable equipment, honest advice and service that shows up when it matters.",
+                "vision": "<p>To be Nepal's most trusted machinery partner — the first name Nepali industry turns to for equipment that performs, season after season.</p>"
+            }
+        )
+        created.append(("Vision", 1))
+
+        Mision.objects.get_or_create(
+            title="What drives us daily",
+            defaults={
+                "subtitle": "Every machine we export, manufacture, distribute or supply is chosen and prepared with the same goal: it arrives ready to work and stays working.",
+                "mision": "<p>To provide reliable and innovative machinery solutions — small scale, medium scale and commercial — delivered ready to work and supported for life.</p>"
+            }
+        )
+        created.append(("Mision", 1))
+
+        values_data = [
+            ("Reliability", "Machines chosen and built to run through long seasons with minimal downtime."),
+            ("Innovation", "Continual upgrades to designs so Nepali industry keeps pace with the region."),
+            ("Local service", "Parts, training and support delivered from Banke to every district we serve."),
+            ("Fair trade", "Transparent pricing across export, manufacture, distribution and supply."),
+        ]
+        for v_t, v_c in values_data:
+            Values.objects.get_or_create(title=v_t, defaults={"values": f"<p>{v_c}</p>"})
+        created.append(("Values", 4))
 
         return created

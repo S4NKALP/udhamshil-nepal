@@ -1,16 +1,27 @@
 import { Link } from "react-router-dom";
 import { LightField, Reveal } from "@/components/site/Parallax";
 import { PageHero } from "@/components/site/PageHero";
+import { useApi } from "@/hooks/useApi";
 
 export default Career;
 
-const roles = [
-  ["workshop-machinist", "Workshop Machinist", "Full-time · Kohalpur, Banke", "Assembly, fitting and finishing of machinery units."],
-  ["field-service-engineer", "Field Service Engineer", "Full-time · Travel across Nepal", "Installation, commissioning and maintenance at customer sites."],
-  ["sales-distribution-officer", "Sales & Distribution Officer", "Full-time · Lumbini Province", "Dealer relationships, quotations and order follow-up."],
-] as const;
+export interface CareerRole {
+  id: number;
+  name: string;
+  short_info: string;
+  job_time: string;
+  location: string;
+  deadline: string;
+  details: string;
+}
 
 function Career() {
+  const { data: roles, loading } = useApi<CareerRole[]>("career");
+
+  if (!loading && (!roles || roles.length === 0)) {
+    return null;
+  }
+
   return (
     <div className="relative">
       <LightField />
@@ -24,18 +35,18 @@ function Career() {
       <section className="relative z-10">
         <div className="mx-auto max-w-7xl px-6 pb-24">
            <div className="divide-y divide-border overflow-hidden border-y border-border bg-background">
-            {roles.map(([slug, title, meta, copy], i) => (
-              <Reveal key={slug} delay={i * 70}>
+            {roles?.map((role, i) => (
+              <Reveal key={role.id} delay={i * 70}>
                 <div className="flex flex-wrap items-center justify-between gap-4 p-7">
                   <div>
-                    <h2 className="text-xl font-bold">{title}</h2>
+                    <h2 className="text-xl font-bold">{role.name}</h2>
                     <p className="mt-1 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
-                      {meta}
+                      {role.job_time} · {role.location}
                     </p>
-                    <p className="mt-2 max-w-lg text-sm text-muted-foreground">{copy}</p>
+                    <p className="mt-2 max-w-lg text-sm text-muted-foreground">{role.short_info}</p>
                   </div>
                   <Link
-                    to={`/career/${slug}`}
+                    to={`/career/${role.id}`}
                     className="bg-ink px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-brand"
                   >
                     View role

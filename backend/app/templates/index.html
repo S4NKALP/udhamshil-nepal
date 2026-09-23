@@ -1,0 +1,59 @@
+{% load django_vite %}
+{% load static %}
+<!doctype html>
+<html lang="en-US" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="theme-color" content="#f05b22" />
+    <meta name="msapplication-TileColor" content="#f05b22" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Udhamshil Nepal" />
+    <meta name="keywords" content="machinery nepal, agro processing, food production machinery, cold storage nepal, construction machinery, small scale machinery nepal, commercial machinery nepal, udhamsil nepal, banke machinery" />
+
+    <title>{{ seo.title|default:"Udhamshil Nepal | Machinery built for Nepal" }}</title>
+    <meta name="description" content="{{ seo.description|default:'Reliable, innovative machinery solutions — exporting, manufacturing, distributing and supplying small, medium and commercial scale equipment across the nation.' }}" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Udhamshil Nepal" />
+    <meta property="og:title" content="{{ seo.title|default:'Udhamshil Nepal | Machinery built for Nepal' }}" />
+    <meta property="og:description" content="{{ seo.description|default:'Reliable, innovative machinery solutions across Nepal.' }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    {% if seo.image %}
+    <meta property="og:image" content="{{ seo.image }}" />
+    {% endif %}
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+    {% vite_react_refresh %}
+    {% vite_hmr_client %}
+    {% vite_asset 'src/main.tsx' %}
+</head>
+
+<body>
+    <div id="root">
+        <!-- SEO shell for basic bots -->
+        <div style="display: none;">
+            <h1>{{ seo.title|default:"Udhamshil Nepal | Machinery built for Nepal" }}</h1>
+            <p>{{ seo.description|default:'Reliable, innovative machinery solutions across Nepal.' }}</p>
+        </div>
+    </div>
+
+    <noscript>
+        <div style="padding: 20px; text-align: center; font-family: sans-serif;">
+            <p>Udhamshil Nepal — Machinery built for Nepal.</p>
+            <p>Contact us at info@udhamsilnepal.com or via the <a href="/contact">contact page</a>.</p>
+        </div>
+    </noscript>
+</body>
+
+</html>

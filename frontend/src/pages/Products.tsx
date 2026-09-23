@@ -1,31 +1,29 @@
 import { Link } from "react-router-dom";
 import { LightField, Reveal } from "@/components/site/Parallax";
 import { PageHero } from "@/components/site/PageHero";
-import productSmall from "@/assets/product-small.jpg";
-import productMedium from "@/assets/product-medium.jpg";
-import productCommercial from "@/assets/product-commercial.jpg";
+import { useApi } from "@/hooks/useApi";
 
 export default Products;
 
-const groups = [
-  {
-    title: "Small Scale",
-    image: productSmall,
-    items: ["Mini milling machines", "Grain grinders", "Oil expellers", "Bench drills"],
-  },
-  {
-    title: "Medium Scale",
-    image: productMedium,
-    items: ["Food processing lines", "Dough & noodle plants", "Filling machines", "Dryers"],
-  },
-  {
-    title: "Commercial",
-    image: productCommercial,
-    items: ["Automated packaging lines", "Cold storage units", "Conveyor systems", "Boilers"],
-  },
-];
+interface ProductFeature {
+  id: number;
+  name: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  image: string | null;
+  features?: ProductFeature[];
+}
 
 function Products() {
+  const { data: products, loading } = useApi<Product[]>("products");
+
+  if (!loading && (!products || products.length === 0)) {
+    return null;
+  }
+
   return (
     <div className="relative">
       <LightField />
@@ -38,27 +36,31 @@ function Products() {
 
       <section className="relative z-10">
         <div className="mx-auto max-w-7xl space-y-8 px-6 pb-24">
-          {groups.map((g, i) => (
-            <Reveal key={g.title} delay={i * 80}>
+          {products?.map((product, i) => (
+            <Reveal key={product.id} delay={i * 80}>
               <div className="grid items-center gap-8 border-y border-border bg-background py-8 md:grid-cols-2">
-                <img
-                  src={g.image}
-                  loading="lazy"
-                  width={1024}
-                  height={768}
-                  alt={`${g.title} machinery`}
-                  className="aspect-[4/3] w-full object-cover"
-                />
+                {product.image && (
+                  <img
+                    src={product.image}
+                    loading="lazy"
+                    width={1024}
+                    height={768}
+                    alt={`${product.name} machinery`}
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                )}
                 <div>
-                  <h2 className="text-2xl font-bold md:text-3xl">{g.title}</h2>
-                  <ul className="mt-5 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
-                    {g.items.map((it) => (
-                      <li key={it} className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                        {it}
-                      </li>
-                    ))}
-                  </ul>
+                  <h2 className="text-2xl font-bold md:text-3xl">{product.name}</h2>
+                  {product.features && product.features.length > 0 && (
+                    <ul className="mt-5 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+                      {product.features.map((feature) => (
+                        <li key={feature.id} className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                          {feature.name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   <Link
                     to="/contact"
                     className="mt-7 inline-block bg-ink px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-brand"

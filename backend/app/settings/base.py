@@ -172,8 +172,8 @@ X_FRAME_OPTIONS = "DENY"
 # Vite Settings
 DJANGO_VITE = {
     "default": {
-        "manifest_path": BASE_DIR / "static" / "dist" / "manifest.json",
-        "static_url_prefix": "dist",
+        "manifest_path": BASE_DIR / "static" / "frontend" / "manifest.json",
+        "static_url_prefix": "frontend",
     }
 }
 

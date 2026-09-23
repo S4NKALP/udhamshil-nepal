@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ArrowUpRight, Menu } from "lucide-react";
 import { useState } from "react";
 
@@ -43,15 +43,18 @@ export function Header() {
 
           <div className="hidden h-full items-center gap-7 text-sm font-semibold text-muted-foreground lg:flex">
             {links.map((l) => (
-              <Link
+              <NavLink
                 key={l.to}
                 to={l.to}
-                activeOptions={{ exact: l.to === "/" }}
-                activeProps={{ className: "border-brand text-ink" }}
-                className="flex h-full items-center border-b-2 border-transparent transition-colors hover:text-brand"
+                end={l.to === "/"}
+                className={({ isActive }) =>
+                  `flex h-full items-center border-b-2 transition-colors hover:text-brand ${
+                    isActive ? "border-brand text-ink" : "border-transparent"
+                  }`
+                }
               >
                 {l.label}
-              </Link>
+              </NavLink>
             ))}
           </div>
 
@@ -94,13 +97,16 @@ export function Header() {
 
                 <nav aria-label="Mobile navigation" className="flex flex-1 flex-col gap-1 px-4 py-6">
                   {links.map((l, index) => (
-                    <Link
+                    <NavLink
                       key={l.to}
                       to={l.to}
+                      end={l.to === "/"}
                       onClick={() => setOpen(false)}
-                      activeOptions={{ exact: l.to === "/" }}
-                      activeProps={{ className: "bg-mist text-ink font-semibold" }}
-                    className="group flex items-center justify-between border-b border-border px-4 py-3.5 text-base text-muted-foreground transition-colors hover:bg-mist hover:text-ink"
+                      className={({ isActive }) =>
+                        `group flex items-center justify-between border-b border-border px-4 py-3.5 text-base transition-colors hover:bg-mist hover:text-ink ${
+                          isActive ? "bg-mist text-ink font-semibold" : "text-muted-foreground"
+                        }`
+                      }
                     >
                       <span className="flex items-center gap-3">
                         <span className="w-5 font-display text-xs text-brand">
@@ -109,7 +115,7 @@ export function Header() {
                         {l.label}
                       </span>
                       <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
-                    </Link>
+                    </NavLink>
                   ))}
                 </nav>
 

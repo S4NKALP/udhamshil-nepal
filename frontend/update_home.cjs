@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+const fs = require('fs');
+
+const homeContent = `import { Link } from "react-router-dom";
 import {
   ArrowRight,
   Building2,
@@ -15,7 +17,7 @@ import {
 import { LightField, Parallax, Reveal } from "@/components/site/Parallax";
 import { Button } from "@/components/ui/button";
 import { useApi } from "@/hooks/useApi";
-
+import heroMachinery from "@/assets/hero-machinery.jpg";
 
 export default Index;
 
@@ -67,8 +69,8 @@ function Index() {
                 <div className="rise-3 mt-14 grid max-w-xl grid-cols-3 gap-5 border-t border-border pt-7">
                   {stats.map((st) => (
                     <div key={st.id}>
-                      <p className="font-display text-3xl font-bold">{st.stats}{st.title.includes('delivery') ? '%' : '+'}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">{st.title}</p>
+                      <p className="font-display text-3xl font-bold">{st.value}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">{st.label}</p>
                     </div>
                   ))}
                 </div>
@@ -81,7 +83,7 @@ function Index() {
                 <Parallax speed={0.06}>
                   <div className="relative overflow-hidden border border-border bg-mist p-3 shadow-glass">
                     <img
-                      src={hero.image }
+                      src={hero.image || heroMachinery}
                       width={1024}
                       height={1280}
                       alt="Featured equipment"
@@ -112,7 +114,7 @@ function Index() {
               >
                 {marquee.map((m) => (
                   <span key={m.id}>
-                    <span>{m.title}</span><span className="text-accent ml-12">/</span>
+                    <span>{m.text}</span><span className="text-accent ml-12">/</span>
                   </span>
                 ))}
               </div>
@@ -311,3 +313,6 @@ function Index() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('src/pages/Home.tsx', homeContent);
