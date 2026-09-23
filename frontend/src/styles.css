@@ -1,0 +1,255 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-brand: var(--brand);
+  --color-ink: var(--ink);
+  --color-mist: var(--mist);
+  --font-display: "Archivo Black", sans-serif;
+  --font-sans: "Hind", sans-serif;
+}
+
+:root {
+  --radius: 0.375rem;
+
+  --brand: oklch(0.48 0.14 254);
+  --ink: oklch(0.23 0.03 250);
+  --mist: oklch(0.965 0.006 245);
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.23 0.03 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.23 0.03 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.23 0.03 250);
+  --primary: oklch(0.48 0.14 254);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.97 0.01 250);
+  --secondary-foreground: oklch(0.23 0.03 250);
+  --muted: oklch(0.97 0.01 250);
+  --muted-foreground: oklch(0.55 0.03 257);
+  --accent: oklch(0.48 0.14 254);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.87 0.012 250);
+  --input: oklch(0.87 0.012 250);
+  --ring: oklch(0.48 0.14 254);
+
+  --gradient-brand: linear-gradient(90deg, var(--brand), var(--brand));
+  --shadow-glass: 0 16px 40px -28px color-mix(in oklab, var(--ink) 35%, transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+}
+
+@utility glass {
+  background: var(--card);
+}
+
+@utility text-gradient {
+  color: var(--brand);
+}
+
+@utility bg-gradient-brand {
+  background-image: var(--gradient-brand);
+}
+
+@utility shadow-glass {
+  box-shadow: var(--shadow-glass);
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(12deg);
+  }
+  50% {
+    transform: translate(40px, -30px) rotate(18deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(12deg);
+  }
+}
+
+@keyframes drift2 {
+  0% {
+    transform: translate(0, 0) rotate(-14deg);
+  }
+  50% {
+    transform: translate(-50px, 25px) rotate(-8deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(-14deg);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes orbit-float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-8px); }
+}
+
+@keyframes morph {
+  0%, 100% {
+    border-radius: 40% 60% 60% 40% / 40% 30% 70% 60%;
+  }
+  33% {
+    border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+  }
+  66% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 40%;
+  }
+}
+
+@keyframes morph-drift {
+  0%, 100% {
+    border-radius: 40% 60% 60% 40% / 40% 30% 70% 60%;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  33% {
+    border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+    transform: translate3d(36px, -24px, 0) rotate(4deg);
+  }
+  66% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 40%;
+    transform: translate3d(-22px, 18px, 0) rotate(-3deg);
+  }
+}
+
+.orbit-item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: clamp(3rem, 8vw, 4.5rem);
+  width: clamp(3rem, 8vw, 4.5rem);
+  animation: orbit-float 5s ease-in-out infinite;
+}
+
+.orbit-item-1 { margin-left: -38%; margin-top: -23%; }
+.orbit-item-2 { margin-left: -10%; margin-top: -43%; animation-delay: -0.8s; }
+.orbit-item-3 { margin-left: 31%; margin-top: -26%; animation-delay: -1.6s; }
+.orbit-item-4 { margin-left: 34%; margin-top: 20%; animation-delay: -2.4s; }
+.orbit-item-5 { margin-left: -5%; margin-top: 38%; animation-delay: -3.2s; }
+.orbit-item-6 { margin-left: -39%; margin-top: 19%; animation-delay: -4s; }
+
+@utility animate-drift {
+  animation: drift 16s ease-in-out infinite;
+}
+
+@utility animate-drift2 {
+  animation: drift2 20s ease-in-out infinite;
+}
+
+@utility animate-drift-slow {
+  animation: drift 24s ease-in-out infinite;
+}
+
+@utility animate-morph {
+  animation: morph 15s ease-in-out infinite alternate;
+}
+
+@utility animate-morph-drift {
+  animation: morph-drift 18s ease-in-out infinite alternate;
+}
+
+@utility animate-morph-drift-reverse {
+  animation: morph-drift 21s ease-in-out -7s infinite alternate-reverse;
+}
+
+@utility animate-morph-slow {
+  animation: morph 24s ease-in-out -9s infinite alternate;
+}
+
+@utility animate-marquee {
+  animation: marquee 26s linear infinite;
+}
+
+@utility rise {
+  animation: rise 0.8s ease both;
+}
+
+@utility rise-2 {
+  animation: rise 0.8s 0.12s ease both;
+}
+
+@utility rise-3 {
+  animation: rise 0.8s 0.24s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
