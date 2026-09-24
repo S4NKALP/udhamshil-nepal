@@ -72,3 +72,12 @@ class CareerAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+from app.models.career import CareerApplication
+
+@admin.register(CareerApplication)
+class CareerApplicationAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "role_title", "email", "phone", "created_at")
+    list_filter = ("role_title", "created_at")
+    search_fields = ("full_name", "email", "phone", "role_title")
+    readonly_fields = ("created_at", "updated_at")

@@ -13,7 +13,10 @@ import {
   Zap,
 } from "lucide-react";
 import { LightField, Parallax, Reveal } from "@/components/site/Parallax";
+import { OrbitalVisualization } from "@/components/site/OrbitalVisualization";
 import { Button } from "@/components/ui/button";
+import { ClientsMarquee } from "@/components/site/ClientsMarquee";
+import { TestimonialsMarquee } from "@/components/site/TestimonialsMarquee";
 import { useApi } from "@/hooks/useApi";
 
 
@@ -103,22 +106,46 @@ function Index() {
       )}
 
       {marquee.length > 0 && (
-        <div className="relative z-10 overflow-hidden border-y border-border bg-background/60 py-4">
+        <div className="relative z-10 flex overflow-hidden border-y border-border bg-ink py-6">
           <div className="animate-marquee flex whitespace-nowrap">
-            {[0, 1].map((i) => (
+            {[0, 1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="flex gap-12 pr-12 text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+                className="flex items-center gap-12 pr-12 text-xl md:text-2xl font-black uppercase tracking-[0.1em] text-white"
               >
                 {marquee.map((m) => (
-                  <span key={m.id}>
-                    <span>{m.title}</span><span className="text-accent ml-12">/</span>
+                  <span key={m.id} className="flex items-center gap-12">
+                    <span>{m.title}</span>
+                    <Star className="h-6 w-6 text-brand fill-brand" />
                   </span>
                 ))}
               </div>
             ))}
           </div>
         </div>
+      )}
+
+      {partners.length > 0 && (
+        <section className="relative z-10 overflow-hidden border-y border-border bg-mist/60">
+          <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-24 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <Reveal>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Our clients</p>
+                <h2 className="mt-3 text-4xl font-bold">Built around the people who produce.</h2>
+                <p className="mt-5 max-w-lg leading-relaxed text-muted-foreground">
+                  We work with ambitious enterprises across agriculture, food production, construction,
+                  utilities and commercial manufacturing.
+                </p>
+              </Reveal>
+            </div>
+
+            <div className="lg:col-span-7">
+              <Parallax speed={0.06}>
+                <ClientsMarquee partners={partners} />
+              </Parallax>
+            </div>
+          </div>
+        </section>
       )}
 
       {whatWeDo.length > 0 && (
@@ -164,36 +191,6 @@ function Index() {
         </section>
       )}
 
-      {partners.length > 0 && (
-        <section className="relative z-10 overflow-hidden border-y border-border bg-mist/60">
-          <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-24 lg:grid-cols-12">
-            <div className="lg:col-span-5">
-              <Reveal>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Our clients</p>
-                <h2 className="mt-3 text-4xl font-bold">Built around the people who produce.</h2>
-                <p className="mt-5 max-w-lg leading-relaxed text-muted-foreground">
-                  We work with ambitious enterprises across agriculture, food production, construction,
-                  utilities and commercial manufacturing.
-                </p>
-              </Reveal>
-            </div>
-
-            <div className="lg:col-span-7">
-              <Parallax speed={0.06}>
-                <div className="grid grid-cols-3 gap-6">
-                  {partners.map((p) => (
-                    <div key={p.id} className="flex flex-col items-center justify-center p-4 border border-border bg-background shadow-glass">
-                      {p.logo && <img src={p.logo} alt={p.name} className="h-12 object-contain" />}
-                      <span className="mt-2 text-xs font-semibold text-center">{p.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </Parallax>
-            </div>
-          </div>
-        </section>
-      )}
-
       {services.length > 0 && (
         <section className="relative z-10">
           <div className="mx-auto max-w-7xl px-6 py-24">
@@ -223,45 +220,8 @@ function Index() {
         </section>
       )}
 
-      {testimonials.length > 0 && (
-        <section className="relative z-10 bg-ink text-primary-foreground">
-          <div className="mx-auto max-w-7xl px-6 py-24">
-            <Reveal>
-              <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Client voices</p>
-                  <h2 className="mt-3 text-4xl font-bold">Confidence earned on the ground.</h2>
-                </div>
-              </div>
-            </Reveal>
-            <div className="mt-12 grid gap-6 lg:grid-cols-3">
-              {testimonials.map((item, index) => (
-                <Reveal key={item.id} delay={index * 90}>
-                   <article className="h-full border border-primary-foreground/15 bg-primary-foreground/5 p-7">
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-1">
-                        {[0, 1, 2, 3, 4].map((star) => <Star key={star} className="h-4 w-4 fill-accent text-accent" aria-hidden="true" />)}
-                      </div>
-                      <Quote className="h-7 w-7 text-accent/60" aria-hidden="true" />
-                    </div>
-                    <blockquote className="mt-8 text-lg leading-relaxed">“{item.testimonial}”</blockquote>
-                    <footer className="mt-8 border-t border-primary-foreground/15 pt-5 flex items-center gap-4">
-                      {item.image && <img src={item.image} alt={item.name} className="w-10 h-10 rounded-full object-cover" />}
-                      <div>
-                        <p className="font-semibold">{item.name}</p>
-                        <p className="mt-1 text-sm text-primary-foreground/60">{item.organization}</p>
-                      </div>
-                    </footer>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {sisterCompanies.length > 0 && (
-        <section className="relative z-10 overflow-hidden">
+        <section className="relative z-10 overflow-hidden bg-mist/30">
           <div className="mx-auto max-w-7xl px-6 py-24">
             <Reveal>
               <div className="mx-auto max-w-2xl text-center">
@@ -270,24 +230,15 @@ function Index() {
                 <p className="mt-4 text-muted-foreground">A growing ecosystem designed to support enterprise from machinery to long-term operations.</p>
               </div>
             </Reveal>
-            <div className="mt-16 grid gap-6 md:grid-cols-3">
-              {sisterCompanies.map((sc, index) => (
-                <Reveal key={sc.id} delay={index * 90}>
-                   <article className="h-full border border-border bg-background p-7 transition hover:border-brand">
-                    <div className="flex items-center justify-between">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                        {sc.logo ? <img src={sc.logo} alt={sc.name} className="h-6 w-6 object-contain" /> : <Settings2 className="h-5 w-5" />}
-                      </span>
-                    </div>
-                    <h3 className="mt-7 text-xl font-bold">
-                      {sc.website_link ? <a href={sc.website_link} target="_blank" rel="noreferrer" className="hover:underline">{sc.name}</a> : sc.name}
-                    </h3>
-                  </article>
-                </Reveal>
-              ))}
+            <div className="mt-16">
+              <OrbitalVisualization nodes={sisterCompanies} />
             </div>
           </div>
         </section>
+      )}
+
+      {testimonials.length > 0 && (
+        <TestimonialsMarquee testimonials={testimonials} />
       )}
 
       <section className="relative z-10 border-y border-border bg-mist/60">
@@ -308,6 +259,7 @@ function Index() {
           </Reveal>
         </div>
       </section>
+
     </div>
   );
 }

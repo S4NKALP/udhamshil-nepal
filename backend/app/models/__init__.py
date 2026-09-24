@@ -1,4 +1,4 @@
-from app.models.career import Career
+from app.models.career import Career, CareerApplication
 from app.models.contact import Contact
 from app.models.homepage import HeroSection, MarqueeService, Stats
 from app.models.org import (

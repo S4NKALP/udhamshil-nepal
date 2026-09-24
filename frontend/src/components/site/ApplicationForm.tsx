@@ -1,14 +1,15 @@
 import { useRef, useState } from "react";
 import { Check, Loader2, Paperclip, Send, X } from "lucide-react";
 import { z } from "zod";
+import { useApi } from "@/hooks/useApi";
 
-const MAX_RESUME_BYTES = 5 * 1024 * 1024;
+const MAX_RESUME_BYTES = 5 * 1024 * 1024; // 5 MB
 
 const applicationSchema = z.object({
   fullName: z
     .string()
     .trim()
-    .nonempty({ message: "Please enter your full name" })
+    .min(2, { message: "Name must be at least 2 characters" })
     .max(100, { message: "Name must be under 100 characters" }),
   email: z
     .string()
@@ -18,7 +19,7 @@ const applicationSchema = z.object({
   phone: z
     .string()
     .trim()
-    .min(7, { message: "Please enter a reachable phone number" })
+    .min(5, { message: "Please enter a valid phone number" })
     .max(30, { message: "Phone number must be under 30 characters" }),
   message: z
     .string()
@@ -32,6 +33,10 @@ type Errors = { [K in FieldName]?: string | undefined };
 const fieldClass =
   "h-12 w-full border border-border bg-background px-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-brand";
 
+interface Organization {
+  whatsapp_no: string;
+}
+
 export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
   const [values, setValues] = useState({
     fullName: "",
@@ -43,6 +48,9 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const fileInput = useRef<HTMLInputElement>(null);
+
+  const { data: org } = useApi<Organization>("org/organization");
+  const whatsappNo = org?.whatsapp_no;
 
   function update(field: keyof typeof values, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }));
@@ -83,10 +91,43 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
     }
 
     setStatus("sending");
-    // Submission target is not connected yet. Once the backend endpoint exists,
-    // post `values`, `resume` and `roleTitle` here as multipart/form-data.
-    await new Promise((resolve) => setTimeout(resolve, 700));
-    setStatus("sent");
+
+    const formData = new FormData();
+    formData.append("role_title", roleTitle);
+    formData.append("full_name", values.fullName);
+    formData.append("email", values.email);
+    formData.append("phone", values.phone);
+    formData.append("message", values.message);
+    if (resume) {
+      formData.append("resume", resume);
+    }
+
+    try {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+      const response = await fetch(`${baseUrl}/career-applications/`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit");
+      }
+
+      setStatus("sent");
+
+      // Redirect to WhatsApp after slight delay
+      setTimeout(() => {
+        const phoneNo = whatsappNo || "+9779800000000";
+        const text = `Hello, I have submitted an application for the role of ${roleTitle}.\nName: ${values.fullName}\nEmail: ${values.email}\nPhone: ${values.phone}`;
+        const waUrl = `https://wa.me/${phoneNo.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
+        window.open(waUrl, "_blank");
+      }, 500);
+
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong while submitting. Please try again.");
+      setStatus("idle");
+    }
   }
 
   function reset() {
@@ -107,8 +148,7 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
         <p className="mt-3 max-w-xl text-muted-foreground">
           Thank you, {values.fullName.split(" ")[0]}. Your application for{" "}
           <span className="text-foreground">{roleTitle}</span> has been recorded with your
-          CV. Our team reviews applications weekly and will contact you on{" "}
-          {values.email} if your profile matches the role.
+          CV. We have also opened a WhatsApp chat for you to directly message us. Our team reviews applications weekly.
         </p>
         <button
           type="button"
@@ -125,7 +165,7 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
     <form onSubmit={handleSubmit} noValidate className="border border-border bg-card p-8 md:p-10">
       <h2 className="font-display text-2xl uppercase">Apply for this role</h2>
       <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-        Fill in your details and attach your CV. Fields marked with * are required.
+        Fill in your details and attach your CV. Fields marked with * are required. Upon submission, you will also be connected via WhatsApp.
       </p>
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
