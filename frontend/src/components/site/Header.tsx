@@ -26,7 +26,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-md">
+    <header className="fixed top-0 inset-x-0 w-full z-50 border-b border-border bg-background/95 backdrop-blur-md transition-all duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <nav className="flex h-20 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3">
@@ -61,7 +61,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <Link
               to="/contact"
-               className="hidden bg-ink px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand sm:inline-block"
+               className="hidden rounded-full bg-brand px-6 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:scale-105 hover:bg-brand/90 sm:inline-block"
             >
               Get a Quote
             </Link>

@@ -70,21 +70,21 @@ function About() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 pb-24 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Parallax speed={0.1}>
-               <div className="border border-border bg-mist p-3 shadow-glass">
+               <div className="group overflow-hidden rounded-3xl border border-border/50 bg-card p-2 shadow-2xl transition-all hover:shadow-brand/10">
                 <img
                   src={about.cover_image }
                   loading="lazy"
                   width={1024}
                   height={1152}
                   alt={about.title}
-                   className="aspect-[4/5] w-full object-cover"
+                   className="aspect-[4/5] w-full rounded-2xl object-cover transition duration-700 group-hover:scale-105"
                 />
               </div>
             </Parallax>
           </div>
           <div className="lg:col-span-7">
             <Reveal>
-              <h2 className="text-3xl font-bold md:text-4xl">{about.title}</h2>
+              <h2 className="text-4xl font-black tracking-tight md:text-5xl">{about.title}</h2>
               <div className="mt-5 text-muted-foreground prose prose-invert" dangerouslySetInnerHTML={{ __html: about.about_us }} />
             </Reveal>
           </div>
@@ -96,8 +96,8 @@ function About() {
       <section className="relative z-10">
         <div className="mx-auto max-w-7xl px-6 pb-24">
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Vision</p>
-            <h2 className="mt-3 text-3xl font-bold md:text-4xl">{vision.title}</h2>
+            <p className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-brand">Vision</p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">{vision.title}</h2>
           </Reveal>
           <div className="mt-10 grid items-center gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
@@ -130,8 +130,8 @@ function About() {
       <section className="relative z-10">
         <div className="mx-auto max-w-7xl px-6 pb-24">
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Mission</p>
-            <h2 className="mt-3 text-3xl font-bold md:text-4xl">{mision.title}</h2>
+            <p className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-brand">Mission</p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">{mision.title}</h2>
           </Reveal>
           <div className="mt-10 grid items-center gap-10 lg:grid-cols-12">
             {mision.subtitle && (
@@ -164,8 +164,8 @@ function About() {
       <section className="relative z-10">
         <div className="mx-auto max-w-7xl px-6 pb-24">
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Values</p>
-            <h2 className="mt-3 text-3xl font-bold md:text-4xl">What we stand for</h2>
+            <p className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-brand">Values</p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">What we stand for</h2>
             <p className="mt-4 max-w-2xl text-muted-foreground">
               The principles behind every machine we export, manufacture and supply.
             </p>

@@ -84,7 +84,7 @@ function ProjectsEvents() {
         <div className="mx-auto grid max-w-7xl gap-6 px-6 pb-24 md:grid-cols-3">
           {entries.map((e, i) => (
             <Reveal key={e.id} delay={i * 80}>
-              <article className="group h-full overflow-hidden border border-border bg-background transition hover:border-brand">
+              <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border/50 bg-card shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/5">
                 {e.image && (
                   <img
                     src={e.image}
@@ -92,11 +92,11 @@ function ProjectsEvents() {
                     width={1024}
                     height={768}
                     alt={e.title}
-                    className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 )}
                 <div className="p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+                  <p className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-accent">
                     {e.year} · {e.tag}
                   </p>
                   <h2 className="mt-2 text-xl font-bold">{e.title}</h2>

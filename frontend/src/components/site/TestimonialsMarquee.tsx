@@ -3,7 +3,7 @@ import { animate, motion, type AnimationPlaybackControls, useMotionValue } from 
 import { Star } from "lucide-react";
 
 const CARD_WIDTH = 480;
-const GAP = 0;
+const GAP = 24;
 
 interface Testimonial {
   id: number;
@@ -54,7 +54,7 @@ export function TestimonialsMarquee({
   const items = [...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials];
 
   return (
-    <section className="relative z-10 overflow-hidden bg-[#0A0A0A] py-24 text-primary-foreground border-y border-white/10">
+    <section className="relative z-10 overflow-hidden bg-mist/30 py-24 text-foreground border-y border-border/50">
       <div className="mx-auto mb-16 max-w-7xl px-6">
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
@@ -114,7 +114,7 @@ export function TestimonialsMarquee({
 function TestimonialCard({ t }: { t: Testimonial }) {
   return (
     <article
-      className="flex min-h-[260px] w-[480px] shrink-0 flex-col justify-between border border-white/10 bg-[#0F0F0F] p-8 transition-colors hover:bg-[#141414] -ml-px -mt-px"
+      className="flex min-h-[260px] w-[480px] shrink-0 flex-col justify-between border border-border/50 bg-card p-8 shadow-sm transition-colors hover:bg-muted/30 m-3 rounded-3xl ml-4"
     >
       <div>
         <div className="flex items-center gap-2 mb-6 text-accent">
@@ -122,21 +122,21 @@ function TestimonialCard({ t }: { t: Testimonial }) {
             {[0, 1, 2, 3, 4].map((star) => <Star key={star} className="h-4 w-4 fill-accent" aria-hidden="true" />)}
           </div>
         </div>
-        <blockquote className="text-[17px] font-medium leading-[1.6] tracking-tight text-white/90">
+        <blockquote className="text-[17px] font-medium leading-[1.6] tracking-tight text-foreground">
           {t.testimonial}
         </blockquote>
       </div>
       <footer className="mt-8 flex items-center gap-4">
         {t.image ? (
-          <img src={t.image} alt={t.name} className="h-11 w-11 rounded-lg object-cover ring-1 ring-white/10" />
+          <img src={t.image} alt={t.name} className="h-11 w-11 rounded-lg object-cover ring-1 ring-border/50" />
         ) : (
-          <div className="grid h-11 w-11 place-items-center rounded-lg bg-white/5 ring-1 ring-white/10 text-lg font-bold text-white/80">
+          <div className="grid h-11 w-11 place-items-center rounded-lg bg-muted ring-1 ring-border/50 text-lg font-bold text-muted-foreground">
             {t.name.charAt(0)}
           </div>
         )}
         <div>
-          <p className="text-[15px] font-semibold text-white">{t.name}</p>
-          <p className="text-[13px] text-white/50">{t.organization}</p>
+          <p className="text-[15px] font-semibold text-foreground">{t.name}</p>
+          <p className="text-[13px] text-muted-foreground">{t.organization}</p>
         </div>
       </footer>
     </article>
