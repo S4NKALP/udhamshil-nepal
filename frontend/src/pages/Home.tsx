@@ -342,7 +342,8 @@ function Index() {
                 </h2>
                 <div className="mt-12 hidden lg:block">
                   <p className="text-sm font-medium text-muted-foreground max-w-sm leading-relaxed">
-                    Share your scale, target output, and location — we'll come back with a recommendation and price tailored to your exact needs.
+                    Share your scale, target output, and location — we'll come back with a
+                    recommendation and price tailored to your exact needs.
                   </p>
                 </div>
               </div>

@@ -5,48 +5,48 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/static/frontend/fonts/InterDisplay-Medium.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/static/frontend/fonts/InterDisplay-Medium.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/static/frontend/fonts/InterDisplay-Medium.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/static/frontend/fonts/InterDisplay-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/static/frontend/fonts/InterDisplay-SemiBold.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/static/frontend/fonts/InterDisplay-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/static/frontend/fonts/InterDisplay-SemiBold.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/static/frontend/fonts/InterDisplay-SemiBold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/static/frontend/fonts/InterDisplay-SemiBold.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/static/frontend/fonts/InterDisplay-SemiBold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/static/frontend/fonts/InterDisplay-SemiBold.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/static/frontend/fonts/InterDisplay-SemiBold.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;

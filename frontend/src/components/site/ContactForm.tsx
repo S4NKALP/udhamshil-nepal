@@ -46,10 +46,7 @@ export function ContactForm({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={`flex flex-col gap-8 ${className}`}
-    >
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-8 ${className}`}>
       <div className="mb-4">
         <h3 className="text-4xl font-display font-black tracking-tighter uppercase text-foreground">
           {title}
