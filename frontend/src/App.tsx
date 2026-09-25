@@ -1,19 +1,33 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './pages/Layout';
-import About from './pages/About';
-import CareerDetail from './pages/CareerDetail';
-import CareerLayout from './pages/Career';
-import CareerIndex from './pages/CareerIndex';
-import Contact from './pages/Contact';
-import Index from './pages/Home';
-import Products from './pages/Products';
-import ProjectsEvents from './pages/Projects-events';
-import Team from './pages/Team';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import Layout from "./pages/Layout";
+import About from "./pages/About";
+import CareerDetail from "./pages/CareerDetail";
+import CareerLayout from "./pages/Career";
+import CareerIndex from "./pages/CareerIndex";
+import Contact from "./pages/Contact";
+import Index from "./pages/Home";
+import Products from "./pages/Products";
+import ProjectsEvents from "./pages/Projects-events";
+import Team from "./pages/Team";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 export default function App() {
-  const basename = import.meta.env.VITE_ROUTER_BASENAME || (window.location.pathname.startsWith('/static/frontend') ? '/static/frontend' : '/');
+  const basename =
+    import.meta.env.VITE_ROUTER_BASENAME ||
+    (window.location.pathname.startsWith("/static/frontend") ? "/static/frontend" : "/");
   return (
     <BrowserRouter basename={basename}>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Index />} />

@@ -34,7 +34,7 @@ function Career() {
 
       <section className="relative z-10 border-t border-border mt-16 pt-16">
         <div className="mx-auto max-w-7xl px-6 pb-32">
-           <div className="flex flex-col gap-0 border-t-2 border-foreground">
+          <div className="flex flex-col gap-0 border-t-2 border-foreground">
             {roles?.map((role, i) => (
               <Reveal key={role.id} delay={i * 70}>
                 <div className="flex flex-wrap items-start md:items-center justify-between gap-8 py-10 border-b border-border hover:bg-muted/30 transition-colors">
@@ -42,8 +42,12 @@ function Career() {
                     <p className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       {role.job_time} <span className="mx-2">—</span> {role.location}
                     </p>
-                    <h2 className="text-3xl font-display font-black tracking-tighter uppercase">{role.name}</h2>
-                    <p className="mt-4 max-w-lg text-sm font-medium leading-relaxed text-muted-foreground">{role.short_info}</p>
+                    <h2 className="text-3xl font-display font-black tracking-tighter uppercase">
+                      {role.name}
+                    </h2>
+                    <p className="mt-4 max-w-lg text-sm font-medium leading-relaxed text-muted-foreground">
+                      {role.short_info}
+                    </p>
                   </div>
                   <Link
                     to={`/career/${role.id}`}

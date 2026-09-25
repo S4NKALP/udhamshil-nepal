@@ -51,8 +51,12 @@ function Products() {
                     </div>
                   )}
                   <div className="md:col-span-6 md:pl-8">
-                    <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4 block">0{i + 1}</span>
-                    <h2 className="text-4xl font-display font-black tracking-tighter uppercase text-foreground md:text-5xl">{product.name}</h2>
+                    <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4 block">
+                      0{i + 1}
+                    </span>
+                    <h2 className="text-4xl font-display font-black tracking-tighter uppercase text-foreground md:text-5xl">
+                      {product.name}
+                    </h2>
                     {product.features && product.features.length > 0 && (
                       <ul className="mt-8 grid gap-4 text-sm font-medium uppercase tracking-widest text-muted-foreground sm:grid-cols-2">
                         {product.features.map((feature) => (

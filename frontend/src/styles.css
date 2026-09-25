@@ -43,28 +43,28 @@
   --radius: 0.375rem;
 
   --brand: oklch(0.48 0.14 254);
-  --ink: oklch(0.23 0.03 250);
-  --mist: oklch(0.965 0.006 245);
+  --ink: oklch(0.15 0 0);
+  --mist: oklch(0.97 0 0);
 
   --background: oklch(1 0 0);
-  --foreground: oklch(0.23 0.03 250);
+  --foreground: oklch(0.15 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.23 0.03 250);
+  --card-foreground: oklch(0.15 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.23 0.03 250);
-  --primary: oklch(0.48 0.14 254);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.97 0.01 250);
-  --secondary-foreground: oklch(0.23 0.03 250);
-  --muted: oklch(0.97 0.01 250);
-  --muted-foreground: oklch(0.55 0.03 257);
-  --accent: oklch(0.48 0.14 254);
-  --accent-foreground: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.15 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.15 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.95 0 0);
+  --accent-foreground: oklch(0.15 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.87 0.012 250);
-  --input: oklch(0.87 0.012 250);
-  --ring: oklch(0.48 0.14 254);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: var(--brand);
 
   --gradient-brand: linear-gradient(90deg, var(--brand), var(--brand));
   --shadow-glass: 0 16px 40px -28px color-mix(in oklab, var(--ink) 35%, transparent);
@@ -153,12 +153,18 @@
 }
 
 @keyframes orbit-float {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  50% { transform: translate(-50%, -50%) translateY(-8px); }
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-8px);
+  }
 }
 
 @keyframes morph {
-  0%, 100% {
+  0%,
+  100% {
     border-radius: 40% 60% 60% 40% / 40% 30% 70% 60%;
   }
   33% {
@@ -170,7 +176,8 @@
 }
 
 @keyframes morph-drift {
-  0%, 100% {
+  0%,
+  100% {
     border-radius: 40% 60% 60% 40% / 40% 30% 70% 60%;
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
@@ -193,12 +200,35 @@
   animation: orbit-float 5s ease-in-out infinite;
 }
 
-.orbit-item-1 { margin-left: -38%; margin-top: -23%; }
-.orbit-item-2 { margin-left: -10%; margin-top: -43%; animation-delay: -0.8s; }
-.orbit-item-3 { margin-left: 31%; margin-top: -26%; animation-delay: -1.6s; }
-.orbit-item-4 { margin-left: 34%; margin-top: 20%; animation-delay: -2.4s; }
-.orbit-item-5 { margin-left: -5%; margin-top: 38%; animation-delay: -3.2s; }
-.orbit-item-6 { margin-left: -39%; margin-top: 19%; animation-delay: -4s; }
+.orbit-item-1 {
+  margin-left: -38%;
+  margin-top: -23%;
+}
+.orbit-item-2 {
+  margin-left: -10%;
+  margin-top: -43%;
+  animation-delay: -0.8s;
+}
+.orbit-item-3 {
+  margin-left: 31%;
+  margin-top: -26%;
+  animation-delay: -1.6s;
+}
+.orbit-item-4 {
+  margin-left: 34%;
+  margin-top: 20%;
+  animation-delay: -2.4s;
+}
+.orbit-item-5 {
+  margin-left: -5%;
+  margin-top: 38%;
+  animation-delay: -3.2s;
+}
+.orbit-item-6 {
+  margin-left: -39%;
+  margin-top: 19%;
+  animation-delay: -4s;
+}
 
 @utility animate-drift {
   animation: drift 16s ease-in-out infinite;

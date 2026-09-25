@@ -10,20 +10,16 @@ interface Partner {
 const LOGO_WIDTH = 220; // fixed width per logo block
 const GAP = 24; // gap between logos
 
-export function ClientsMarquee({
-  partners,
-}: {
-  partners: Partner[];
-}) {
+export function ClientsMarquee({ partners }: { partners: Partner[] }) {
   const x = useMotionValue(0);
   const controls = useRef<AnimationPlaybackControls | null>(null);
 
   useEffect(() => {
     if (partners.length === 0) return;
-    
+
     // We duplicate the array to ensure smooth infinite scroll
     const setWidth = partners.length * (LOGO_WIDTH + GAP);
-    
+
     controls.current = animate(x, [-setWidth, 0], {
       duration: 30, // adjust speed
       ease: "linear",
@@ -41,18 +37,15 @@ export function ClientsMarquee({
   const items = [...partners, ...partners, ...partners, ...partners, ...partners, ...partners];
 
   return (
-    <div 
+    <div
       className="relative flex w-full overflow-hidden mask-edges-clients"
       onMouseEnter={() => controls.current?.pause()}
       onMouseLeave={() => controls.current?.play()}
     >
-      <motion.div
-        style={{ x, gap: GAP }}
-        className="flex items-center w-max"
-      >
+      <motion.div style={{ x, gap: GAP }} className="flex items-center w-max">
         {items.map((client, i) => (
-          <div 
-            key={`${client.id}-${i}`} 
+          <div
+            key={`${client.id}-${i}`}
             className="group relative flex h-32 w-[220px] shrink-0 items-center justify-center transition-all"
           >
             {client.logo ? (

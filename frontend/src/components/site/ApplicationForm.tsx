@@ -21,10 +21,7 @@ const applicationSchema = z.object({
     .trim()
     .min(5, { message: "Please enter a valid phone number" })
     .max(30, { message: "Phone number must be under 30 characters" }),
-  message: z
-    .string()
-    .trim()
-    .max(1000, { message: "Please keep your note under 1000 characters" }),
+  message: z.string().trim().max(1000, { message: "Please keep your note under 1000 characters" }),
 });
 
 type FieldName = "fullName" | "email" | "phone" | "message" | "resume";
@@ -119,10 +116,9 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
       setTimeout(() => {
         const phoneNo = whatsappNo || "+9779800000000";
         const text = `Hello, I have submitted an application for the role of ${roleTitle}.\nName: ${values.fullName}\nEmail: ${values.email}\nPhone: ${values.phone}`;
-        const waUrl = `https://wa.me/${phoneNo.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
+        const waUrl = `https://wa.me/${phoneNo.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(text)}`;
         window.open(waUrl, "_blank");
       }, 500);
-
     } catch (error) {
       console.error(error);
       alert("Something went wrong while submitting. Please try again.");
@@ -147,8 +143,9 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
         <h3 className="mt-6 font-display text-2xl uppercase">Application received</h3>
         <p className="mt-3 max-w-xl text-muted-foreground">
           Thank you, {values.fullName.split(" ")[0]}. Your application for{" "}
-          <span className="text-foreground">{roleTitle}</span> has been recorded with your
-          CV. We have also opened a WhatsApp chat for you to directly message us. Our team reviews applications weekly.
+          <span className="text-foreground">{roleTitle}</span> has been recorded with your CV. We
+          have also opened a WhatsApp chat for you to directly message us. Our team reviews
+          applications weekly.
         </p>
         <button
           type="button"
@@ -165,7 +162,8 @@ export function ApplicationForm({ roleTitle }: { roleTitle: string }) {
     <form onSubmit={handleSubmit} noValidate className="border border-border bg-card p-8 md:p-10">
       <h2 className="font-display text-2xl uppercase">Apply for this role</h2>
       <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-        Fill in your details and attach your CV. Fields marked with * are required. Upon submission, you will also be connected via WhatsApp.
+        Fill in your details and attach your CV. Fields marked with * are required. Upon submission,
+        you will also be connected via WhatsApp.
       </p>
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">

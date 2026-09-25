@@ -26,7 +26,7 @@ function Team() {
   return (
     <div className="relative">
       <LightField />
-      
+
       <PageHero
         eyebrow="People"
         title="The team behind"
@@ -42,26 +42,36 @@ function Team() {
                 <div className="group flex h-full flex-col">
                   {person.image ? (
                     <div className="aspect-[3/4] w-full overflow-hidden bg-muted mb-6">
-                      <img src={person.image} alt={person.name} className="h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0" />
+                      <img
+                        src={person.image}
+                        alt={person.name}
+                        className="h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
+                      />
                     </div>
                   ) : (
                     <div className="aspect-[3/4] w-full bg-muted mb-6 grid place-items-center">
-                      <span className="font-display text-6xl font-black text-muted-foreground/30">{String(person.name).charAt(0)}</span>
+                      <span className="font-display text-6xl font-black text-muted-foreground/30">
+                        {String(person.name).charAt(0)}
+                      </span>
                     </div>
                   )}
-                  
+
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
-                      <h2 className="text-2xl font-display font-black tracking-tight uppercase text-foreground">{person.name}</h2>
-                      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-2 mb-6 border-b border-border pb-4">{person.position}</h3>
+                      <h2 className="text-2xl font-display font-black tracking-tight uppercase text-foreground">
+                        {person.name}
+                      </h2>
+                      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-2 mb-6 border-b border-border pb-4">
+                        {person.position}
+                      </h3>
                       <p className="text-sm font-medium leading-relaxed text-foreground line-clamp-4">
-                        {person.short_intro || person.bio.replace(/<[^>]*>?/gm, '')}
+                        {person.short_intro || person.bio.replace(/<[^>]*>?/gm, "")}
                       </p>
                     </div>
 
                     <div className="mt-8 flex flex-col gap-2">
                       {person.email && (
-                        <a 
+                        <a
                           href={`mailto:${person.email}`}
                           className="text-xs font-bold uppercase tracking-widest text-foreground hover:text-brand transition-colors flex items-center gap-2"
                         >
@@ -69,7 +79,7 @@ function Team() {
                         </a>
                       )}
                       {person.phone_no && (
-                        <a 
+                        <a
                           href={`tel:${person.phone_no}`}
                           className="text-xs font-bold uppercase tracking-widest text-foreground hover:text-brand transition-colors flex items-center gap-2"
                         >

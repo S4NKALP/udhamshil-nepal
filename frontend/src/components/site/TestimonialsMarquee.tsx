@@ -13,11 +13,7 @@ interface Testimonial {
   image: string | null;
 }
 
-export function TestimonialsMarquee({
-  testimonials,
-}: {
-  testimonials: Testimonial[];
-}) {
+export function TestimonialsMarquee({ testimonials }: { testimonials: Testimonial[] }) {
   const x1 = useMotionValue(0);
   const x2 = useMotionValue(0);
   const controls1 = useRef<AnimationPlaybackControls | null>(null);
@@ -26,14 +22,14 @@ export function TestimonialsMarquee({
   useEffect(() => {
     if (testimonials.length === 0) return;
     const setWidth = testimonials.length * (CARD_WIDTH + GAP);
-    
+
     // Row 1: moves left (0 to -setWidth)
     controls1.current = animate(x1, [0, -setWidth], {
       duration: 40,
       ease: "linear",
       repeat: Infinity,
     });
-    
+
     // Row 2: moves right (-setWidth to 0)
     controls2.current = animate(x2, [-setWidth, 0], {
       duration: 40,
@@ -49,13 +45,23 @@ export function TestimonialsMarquee({
 
   if (testimonials.length === 0) return null;
 
-  const items = [...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials];
+  const items = [
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+  ];
 
   return (
     <section className="relative z-10 overflow-hidden bg-background py-32 border-t border-border text-foreground">
       <div className="mx-auto mb-24 max-w-7xl px-6 text-center">
-        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">Client voices</p>
-        <h2 className="text-4xl font-display font-black tracking-tighter uppercase md:text-6xl">Confidence earned on the ground.</h2>
+        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+          Client voices
+        </p>
+        <h2 className="text-4xl font-display font-black tracking-tighter uppercase md:text-6xl">
+          Confidence earned on the ground.
+        </h2>
       </div>
 
       <div
@@ -71,26 +77,20 @@ export function TestimonialsMarquee({
         }}
       >
         {/* ROW 1 */}
-        <motion.div
-          style={{ x: x1, gap: GAP }}
-          className="flex items-stretch w-max ml-4"
-        >
+        <motion.div style={{ x: x1, gap: GAP }} className="flex items-stretch w-max ml-4">
           {items.map((t, i) => (
             <TestimonialCard key={`r1-${t.id}-${i}`} t={t} />
           ))}
         </motion.div>
 
         {/* ROW 2 */}
-        <motion.div
-          style={{ x: x2, gap: GAP }}
-          className="flex items-stretch w-max ml-4"
-        >
+        <motion.div style={{ x: x2, gap: GAP }} className="flex items-stretch w-max ml-4">
           {items.map((t, i) => (
             <TestimonialCard key={`r2-${t.id}-${i}`} t={t} />
           ))}
         </motion.div>
       </div>
-      
+
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -107,12 +107,14 @@ export function TestimonialsMarquee({
 
 function TestimonialCard({ t }: { t: Testimonial }) {
   return (
-    <article
-      className="flex min-h-[260px] w-[400px] md:w-[480px] shrink-0 flex-col gap-6 border border-border bg-muted/10 p-8 transition-colors hover:bg-muted/30"
-    >
+    <article className="flex min-h-[260px] w-[400px] md:w-[480px] shrink-0 flex-col gap-6 border border-border bg-muted/10 p-8 transition-colors hover:bg-muted/30">
       <div className="flex flex-wrap items-center gap-4 border-b border-border/50 pb-6">
         {t.image ? (
-          <img src={t.image} alt={t.name} className="h-12 w-12 rounded-full object-cover grayscale" />
+          <img
+            src={t.image}
+            alt={t.name}
+            className="h-12 w-12 rounded-full object-cover grayscale"
+          />
         ) : (
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-foreground font-display text-lg font-bold text-background">
             {t.name.charAt(0)}
@@ -120,10 +122,18 @@ function TestimonialCard({ t }: { t: Testimonial }) {
         )}
         <div className="flex min-w-[150px] flex-1 flex-col gap-1">
           <p className="text-base font-bold uppercase tracking-wide text-foreground">{t.name}</p>
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{t.organization || "Google review"}</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            {t.organization || "Google review"}
+          </p>
         </div>
         <div className="ml-auto flex gap-1">
-          {[0, 1, 2, 3, 4].map((star) => <Star key={star} className="h-4 w-4 fill-foreground text-foreground" aria-hidden="true" />)}
+          {[0, 1, 2, 3, 4].map((star) => (
+            <Star
+              key={star}
+              className="h-4 w-4 fill-foreground text-foreground"
+              aria-hidden="true"
+            />
+          ))}
         </div>
       </div>
       <blockquote className="text-lg font-medium leading-relaxed text-muted-foreground">

@@ -1,7 +1,5 @@
 import { LightField, Parallax, Reveal } from "@/components/site/Parallax";
-import { PageHero } from "@/components/site/PageHero";
 import { useApi } from "@/hooks/useApi";
-
 
 export default About;
 
@@ -45,7 +43,7 @@ function About() {
   const { data: valuesList, loading: valuesLoading } = useApi<Value[]>("org/values");
 
   const isLoading = aboutLoading || visionLoading || misionLoading || valuesLoading;
-  
+
   const about = aboutList?.[0];
   const vision = visionList?.[0];
   const mision = misionList?.[0];
@@ -58,104 +56,133 @@ function About() {
   return (
     <div className="relative">
       <LightField />
-      <PageHero
-        eyebrow="Since 2020"
-        title="Built in Banke, serving"
-        highlight="all of Nepal"
-        description="Udhamsil Nepal Global Trade Company is a prominent exporter, manufacturer, distributor and supplier of small scale, medium scale and commercial machinery in Nepal."
-      />
 
       {about && (
-      <section className="relative z-10">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 pb-32 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <Parallax speed={0.1}>
-               <div className="group overflow-hidden bg-muted aspect-[4/5] w-full">
-                <img
-                  src={about.cover_image}
-                  loading="lazy"
-                  alt={about.title}
-                   className="w-full h-full object-cover grayscale transition duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+        <section className="relative z-10 pt-32 pb-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="grid lg:grid-cols-12 gap-12 items-end mb-16">
+              <div className="lg:col-span-8 rise">
+                <h1 className="font-display text-[10vw] sm:text-[8vw] lg:text-[5.5rem] leading-[0.85] tracking-tighter uppercase">
+                  {about.title}
+                  {about.subtitle && (
+                    <span className="text-brand block mt-2">{about.subtitle}</span>
+                  )}
+                </h1>
+              </div>
+              <div className="lg:col-span-4 pb-4 rise-2">
+                <div
+                  className="text-sm font-medium leading-relaxed text-foreground prose prose-invert"
+                  dangerouslySetInnerHTML={{ __html: about.about_us }}
                 />
               </div>
-            </Parallax>
+            </div>
+
+            {about.cover_image && (
+              <div className="relative w-full aspect-[4/3] md:aspect-[21/9] bg-muted overflow-hidden rise-3 mt-16">
+                <Parallax speed={0.05}>
+                  <img
+                    src={about.cover_image}
+                    alt={about.title}
+                    className="w-full h-full object-cover object-center scale-110 grayscale hover:grayscale-0 transition-all duration-1000"
+                  />
+                </Parallax>
+              </div>
+            )}
           </div>
-          <div className="lg:col-span-7 lg:pl-12">
-            <Reveal>
-              <h2 className="text-4xl font-display font-black tracking-tighter uppercase md:text-6xl">{about.title}</h2>
-              <div className="mt-8 text-base leading-relaxed text-muted-foreground prose prose-invert max-w-2xl" dangerouslySetInnerHTML={{ __html: about.about_us }} />
-            </Reveal>
-          </div>
-        </div>
-      </section>
+        </section>
       )}
 
       {vision && (
-      <section className="relative z-10 border-t border-border mt-16 pt-32">
-        <div className="mx-auto max-w-7xl px-6 pb-32">
-          <Reveal>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-              <div className="lg:col-span-4">
-                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">01 — Vision</p>
-                <h2 className="text-4xl font-display font-black tracking-tighter uppercase">{vision.title}</h2>
-                {vision.subtitle && (
-                  <p className="mt-6 text-sm font-medium text-foreground uppercase tracking-widest">
-                    {vision.subtitle}
+        <section className="relative z-10 border-t border-border mt-16 pt-32">
+          <div className="mx-auto max-w-7xl px-6 pb-32">
+            <Reveal>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div className="lg:col-span-4">
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                    01 — Vision
                   </p>
-                )}
+                  <h2 className="text-4xl font-display font-black tracking-tighter uppercase">
+                    {vision.title}
+                  </h2>
+                  {vision.subtitle && (
+                    <p className="mt-6 text-sm font-medium text-foreground uppercase tracking-widest">
+                      {vision.subtitle}
+                    </p>
+                  )}
+                </div>
+                <div className="lg:col-span-8 lg:pl-12">
+                  <div
+                    className="text-2xl md:text-4xl font-display font-bold uppercase tracking-tight leading-tight text-foreground/80 prose prose-invert"
+                    dangerouslySetInnerHTML={{ __html: vision.vision }}
+                  />
+                </div>
               </div>
-              <div className="lg:col-span-8 lg:pl-12">
-                <div className="text-2xl md:text-4xl font-display font-bold uppercase tracking-tight leading-tight text-foreground/80 prose prose-invert" dangerouslySetInnerHTML={{ __html: vision.vision }} />
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+            </Reveal>
+          </div>
+        </section>
       )}
 
       {mision && (
-      <section className="relative z-10 border-t border-border pt-32">
-        <div className="mx-auto max-w-7xl px-6 pb-32">
-          <Reveal>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-              <div className="lg:col-span-4">
-                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">02 — Mission</p>
-                <h2 className="text-4xl font-display font-black tracking-tighter uppercase">{mision.title}</h2>
-                {mision.subtitle && (
-                  <p className="mt-6 text-sm font-medium text-foreground uppercase tracking-widest">
-                    {mision.subtitle}
+        <section className="relative z-10 border-t border-border pt-32">
+          <div className="mx-auto max-w-7xl px-6 pb-32">
+            <Reveal>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div className="lg:col-span-4">
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                    02 — Mission
                   </p>
-                )}
+                  <h2 className="text-4xl font-display font-black tracking-tighter uppercase">
+                    {mision.title}
+                  </h2>
+                  {mision.subtitle && (
+                    <p className="mt-6 text-sm font-medium text-foreground uppercase tracking-widest">
+                      {mision.subtitle}
+                    </p>
+                  )}
+                </div>
+                <div className="lg:col-span-8 lg:pl-12">
+                  <div
+                    className="text-2xl md:text-4xl font-display font-bold uppercase tracking-tight leading-tight text-foreground/80 prose prose-invert"
+                    dangerouslySetInnerHTML={{ __html: mision.mision }}
+                  />
+                </div>
               </div>
-              <div className="lg:col-span-8 lg:pl-12">
-                <div className="text-2xl md:text-4xl font-display font-bold uppercase tracking-tight leading-tight text-foreground/80 prose prose-invert" dangerouslySetInnerHTML={{ __html: mision.mision }} />
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+            </Reveal>
+          </div>
+        </section>
       )}
 
       {values && values.length > 0 && (
-      <section className="relative z-10 border-t border-border pt-32">
-        <div className="mx-auto max-w-7xl px-6 pb-32">
-          <Reveal>
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">03 — Values</p>
-            <h2 className="text-5xl font-display font-black tracking-tighter uppercase md:text-7xl">What we stand for.</h2>
-          </Reveal>
-          <div className="mt-24 grid gap-16 md:grid-cols-2 lg:grid-cols-4">
-            {values.map((val, index) => (
-              <Reveal key={val.id} delay={index * 80}>
-                 <div className="border-t-2 border-foreground pt-8">
-                  <span className="text-4xl font-display font-black text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-6 text-xl font-display font-black uppercase tracking-tight">{val.title}</h3>
-                  <div className="mt-4 text-sm font-medium leading-relaxed text-muted-foreground prose prose-invert" dangerouslySetInnerHTML={{ __html: val.values }} />
-                </div>
-              </Reveal>
-            ))}
+        <section className="relative z-10 border-t border-border pt-32">
+          <div className="mx-auto max-w-7xl px-6 pb-32">
+            <Reveal>
+              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+                03 — Values
+              </p>
+              <h2 className="text-5xl font-display font-black tracking-tighter uppercase md:text-7xl">
+                What we stand for.
+              </h2>
+            </Reveal>
+            <div className="mt-24 grid gap-16 md:grid-cols-2 lg:grid-cols-4">
+              {values.map((val, index) => (
+                <Reveal key={val.id} delay={index * 80}>
+                  <div className="border-t-2 border-foreground pt-8">
+                    <span className="text-4xl font-display font-black text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="mt-6 text-xl font-display font-black uppercase tracking-tight">
+                      {val.title}
+                    </h3>
+                    <div
+                      className="mt-4 text-sm font-medium leading-relaxed text-muted-foreground prose prose-invert"
+                      dangerouslySetInnerHTML={{ __html: val.values }}
+                    />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
     </div>
   );

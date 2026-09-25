@@ -26,7 +26,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 inset-x-0 w-full z-50 bg-background/90 backdrop-blur-md transition-all duration-300">
+    <header className="fixed top-0 inset-x-0 w-full z-50 bg-background border-b border-transparent transition-all duration-300 hover:border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <nav className="flex h-24 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-4">
@@ -77,7 +77,7 @@ export function Header() {
               >
                 <SheetHeader className="border-b border-border px-6 py-6 text-left">
                   <div className="flex items-center gap-3 pr-10">
-                     <span className="grid h-10 w-10 place-items-center bg-brand font-display font-bold text-primary-foreground">
+                    <span className="grid h-10 w-10 place-items-center bg-brand font-display font-bold text-primary-foreground">
                       U
                     </span>
                     <div>
@@ -89,7 +89,10 @@ export function Header() {
                   </div>
                 </SheetHeader>
 
-                <nav aria-label="Mobile navigation" className="flex flex-1 flex-col gap-1 px-4 py-6">
+                <nav
+                  aria-label="Mobile navigation"
+                  className="flex flex-1 flex-col gap-1 px-4 py-6"
+                >
                   {links.map((l, index) => (
                     <NavLink
                       key={l.to}

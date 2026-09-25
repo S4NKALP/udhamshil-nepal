@@ -43,7 +43,9 @@ export function Parallax({
 
   return (
     <div ref={ref} className={className}>
-      <div style={{ transform: `translate3d(0, ${offset.toFixed(2)}px, 0)`, willChange: "transform" }}>
+      <div
+        style={{ transform: `translate3d(0, ${offset.toFixed(2)}px, 0)`, willChange: "transform" }}
+      >
         {children}
       </div>
     </div>

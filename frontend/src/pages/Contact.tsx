@@ -19,7 +19,6 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
   const { data: org } = useApi<Organization>("org/organization");
-  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,19 +28,19 @@ export default function Contact() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "/api";
       const res = await fetch(`${baseUrl}/contact/`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: data.name,
           phone_no: data.phone_no,
           email: data.email,
           subject: data.subject || "Website Enquiry",
-          message: data.message
-        })
+          message: data.message,
+        }),
       });
       if (res.ok) {
         setSent(true);
@@ -73,8 +72,12 @@ export default function Contact() {
               className="flex flex-col gap-8 border-t-2 border-foreground pt-12"
             >
               <div className="mb-4">
-                <h3 className="text-4xl font-display font-black tracking-tighter uppercase text-foreground">Send an enquiry</h3>
-                <p className="mt-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">We generally respond within 24 hours.</p>
+                <h3 className="text-4xl font-display font-black tracking-tighter uppercase text-foreground">
+                  Send an enquiry
+                </h3>
+                <p className="mt-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                  We generally respond within 24 hours.
+                </p>
               </div>
 
               <div className="grid gap-8 sm:grid-cols-2">
@@ -152,7 +155,8 @@ export default function Contact() {
               {sent && (
                 <div className="mt-4 border border-border p-6 text-center">
                   <p className="text-sm font-bold uppercase tracking-widest text-foreground">
-                    Thanks — your enquiry has been sent successfully. We will get back to you shortly.
+                    Thanks — your enquiry has been sent successfully. We will get back to you
+                    shortly.
                   </p>
                 </div>
               )}
@@ -171,7 +175,9 @@ export default function Contact() {
             <Reveal delay={90} className="order-1 lg:order-2 lg:col-span-5">
               <div className="flex flex-col justify-start space-y-16 border-t-2 border-border pt-12">
                 <div>
-                  <h2 className="text-3xl font-display font-black tracking-tight uppercase text-foreground">{org.name || "Udhamsil"}</h2>
+                  <h2 className="text-3xl font-display font-black tracking-tight uppercase text-foreground">
+                    {org.name || "Udhamsil"}
+                  </h2>
                   <p className="mt-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
                     Global Trade Company
                   </p>
@@ -179,30 +185,47 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-12">
                   <div className="space-y-2">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">Headquarters</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">
+                      Headquarters
+                    </h3>
                     <p className="text-sm font-medium leading-relaxed text-foreground whitespace-pre-line">
                       {org.address || "Kohalpur-11, Banke\nLumbini Province, Nepal"}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">Email Us</h3>
-                    <a href={`mailto:${org.primary_email || "info@udhamsilnepal.com"}`} className="block text-sm font-medium text-foreground hover:text-brand transition-colors">
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">
+                      Email Us
+                    </h3>
+                    <a
+                      href={`mailto:${org.primary_email || "info@udhamsilnepal.com"}`}
+                      className="block text-sm font-medium text-foreground hover:text-brand transition-colors"
+                    >
                       {org.primary_email || "info@udhamsilnepal.com"}
                     </a>
                   </div>
 
                   {(org.phone_number || org.whatsapp_no) && (
                     <div className="space-y-2">
-                      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">Call Us</h3>
+                      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">
+                        Call Us
+                      </h3>
                       <div className="space-y-2">
                         {org.phone_number && (
-                          <a href={`tel:${org.phone_number}`} className="block text-sm font-medium text-foreground hover:text-brand transition-colors">
+                          <a
+                            href={`tel:${org.phone_number}`}
+                            className="block text-sm font-medium text-foreground hover:text-brand transition-colors"
+                          >
                             {org.phone_number}
                           </a>
                         )}
                         {org.whatsapp_no && (
-                          <a href={`https://wa.me/${org.whatsapp_no}`} target="_blank" rel="noreferrer" className="block text-sm font-medium text-foreground hover:text-brand transition-colors">
+                          <a
+                            href={`https://wa.me/${org.whatsapp_no}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="block text-sm font-medium text-foreground hover:text-brand transition-colors"
+                          >
                             WhatsApp: {org.whatsapp_no}
                           </a>
                         )}
@@ -211,7 +234,9 @@ export default function Contact() {
                   )}
 
                   <div className="space-y-2">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">Business Hours</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 border-b border-border pb-2">
+                      Business Hours
+                    </h3>
                     <p className="text-sm font-medium text-foreground">
                       {org.working_hour || "Sunday – Friday, 9:00 – 18:00"}
                     </p>
@@ -229,7 +254,11 @@ export default function Contact() {
               <div className="h-[500px] w-full overflow-hidden bg-muted grayscale">
                 <iframe
                   title="Google Maps"
-                  src={org?.google_map_link && org.google_map_link.includes("embed") ? org.google_map_link : `https://www.google.com/maps?q=${encodeURIComponent(org?.address || "")}&output=embed`}
+                  src={
+                    org?.google_map_link && org.google_map_link.includes("embed")
+                      ? org.google_map_link
+                      : `https://www.google.com/maps?q=${encodeURIComponent(org?.address || "")}&output=embed`
+                  }
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

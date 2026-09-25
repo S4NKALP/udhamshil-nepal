@@ -51,9 +51,7 @@ function CareerDetail() {
             <div className="mt-8 flex items-center gap-4 text-xs font-bold uppercase text-brand">
               <span className="h-px w-12 bg-brand" /> Careers
             </div>
-            <h1 className="mt-6 max-w-4xl text-4xl leading-[1.06] md:text-6xl">
-              {role.name}
-            </h1>
+            <h1 className="mt-6 max-w-4xl text-4xl leading-[1.06] md:text-6xl">{role.name}</h1>
             <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-t border-border pt-5 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-accent" /> {role.location}
@@ -71,10 +69,8 @@ function CareerDetail() {
           <div className="space-y-12 lg:col-span-8">
             <Reveal>
               <div>
-                <h2 className="text-xs font-bold uppercase text-accent">
-                  Role Details
-                </h2>
-                <div 
+                <h2 className="text-xs font-bold uppercase text-accent">Role Details</h2>
+                <div
                   className="mt-4 max-w-2xl text-lg text-muted-foreground prose prose-invert"
                   dangerouslySetInnerHTML={{ __html: role.details }}
                 />
@@ -97,8 +93,7 @@ function CareerDetail() {
                 Apply for this role <ArrowUpRight className="h-4 w-4" />
               </a>
               <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-                Complete the application form below with your contact details
-                and CV.
+                Complete the application form below with your contact details and CV.
               </p>
             </aside>
           </Reveal>

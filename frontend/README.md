@@ -4,7 +4,7 @@ create me a company portfolio website with multipages i want this all pages home
 
 Udhamsil Nepal
 
- Udhamsil Nepal Global Trade Company Established in 2020, which is prominent exporter, manufacturer, distributor and suppliers of various types of small scale, medium scale and commercial machinery in Nepal located in kohalpur-11 Banke. The company's mission to provide reliable and innovative machinery Solutions.
+Udhamsil Nepal Global Trade Company Established in 2020, which is prominent exporter, manufacturer, distributor and suppliers of various types of small scale, medium scale and commercial machinery in Nepal located in kohalpur-11 Banke. The company's mission to provide reliable and innovative machinery Solutions.
 
 This project was built with [Lovable](https://lovable.dev).
 
