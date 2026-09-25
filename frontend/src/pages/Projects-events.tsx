@@ -70,7 +70,11 @@ function ProjectsEvents() {
 
   entries.sort((a, b) => b.timestamp - a.timestamp);
 
-  if (!isLoading && entries.length === 0) {
+  if (isLoading) {
+    return <div className="min-h-[150vh] bg-background" />;
+  }
+
+  if (entries.length === 0) {
     return null;
   }
 

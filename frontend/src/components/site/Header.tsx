@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { ArrowUpRight, Menu } from "lucide-react";
 import { useState } from "react";
 
+import { useApi } from "@/hooks/useApi";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -24,15 +25,19 @@ const links = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { data: org } = useApi<any>("org/organization");
+  const logoUrl = org?.logo || `${import.meta.env.BASE_URL}logo.png`;
 
   return (
     <header className="fixed top-0 inset-x-0 w-full z-50 bg-background border-b border-transparent transition-all duration-300 hover:border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <nav className="flex h-24 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-4">
-            <span className="leading-tight">
-              <span className="block font-display text-lg tracking-wide">UDHAMSIL</span>
-            </span>
+            <img
+              src={logoUrl}
+              alt={org?.name || "Udhamshil Nepal"}
+              className="h-20 md:h-24 w-auto object-contain scale-110 md:scale-125 origin-left"
+            />
           </Link>
 
           <div className="hidden h-full items-center gap-8 text-xs font-medium uppercase tracking-widest text-muted-foreground lg:flex">

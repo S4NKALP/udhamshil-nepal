@@ -49,7 +49,11 @@ function About() {
   const mision = misionList?.[0];
   const values = valuesList || [];
 
-  if (!isLoading && !about && !vision && !mision && values.length === 0) {
+  if (isLoading) {
+    return <div className="min-h-[150vh] bg-background" />;
+  }
+
+  if (!about && !vision && !mision && values.length === 0) {
     return null;
   }
 

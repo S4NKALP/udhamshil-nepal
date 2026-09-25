@@ -7,6 +7,7 @@ import { OrbitalVisualization } from "@/components/site/OrbitalVisualization";
 import { ClientsMarquee } from "@/components/site/ClientsMarquee";
 import { TestimonialsMarquee } from "@/components/site/TestimonialsMarquee";
 import { useApi } from "@/hooks/useApi";
+import { ContactForm } from "@/components/site/ContactForm";
 
 function AnimatedStat({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -40,8 +41,8 @@ function AnimatedStat({ value }: { value: number }) {
 export default Index;
 
 function Index() {
-  const { data: heroList } = useApi("homepage/hero");
-  const { data: org } = useApi("org/organization");
+  const { data: heroList, loading: heroLoading } = useApi("homepage/hero");
+  const { data: org, loading: orgLoading } = useApi("org/organization");
   const { data: statsList } = useApi("homepage/stats");
   const { data: marqueeList } = useApi("homepage/marquee");
   const { data: whatWeDoList } = useApi("org/what-we-do");
@@ -58,6 +59,10 @@ function Index() {
   const sisterCompanies = sisterCompaniesList || [];
   const services = servicesList || [];
   const testimonials = testimonialsList || [];
+
+  if (heroLoading || orgLoading) {
+    return <div className="min-h-[150vh] bg-background" />;
+  }
 
   return (
     <div className="relative bg-background">
@@ -320,33 +325,29 @@ function Index() {
 
       {testimonials.length > 0 && <TestimonialsMarquee testimonials={testimonials} />}
 
-      <section className="relative z-10 bg-brand text-white overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 py-32 md:py-48 text-center">
+      <section className="relative z-10 bg-background overflow-hidden border-t border-border">
+        <div className="mx-auto max-w-7xl px-6 py-32 md:py-48">
           <Reveal>
-            <div className="mx-auto max-w-4xl">
-              <p className="text-xs font-bold uppercase tracking-widest text-white/70 mb-8">
-                Ready to scale
-              </p>
-              <h2 className="text-5xl font-display font-black tracking-tighter uppercase md:text-7xl lg:text-[7rem] leading-[0.9]">
-                Need a machine
-                <br />
-                spec'd for your
-                <br />
-                output?
-              </h2>
-              <div className="mt-16 flex flex-col items-center justify-center gap-8 sm:flex-row">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-brand bg-white px-8 py-4 hover:bg-white/90 transition-colors"
-                >
-                  Get a Quote <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/products"
-                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white hover:text-white/70 transition-colors border-b border-white/30 pb-1 hover:border-white"
-                >
-                  Browse Catalogue
-                </Link>
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-8">
+                  Ready to scale
+                </p>
+                <h2 className="text-5xl font-display font-black tracking-tighter uppercase md:text-7xl leading-[0.9]">
+                  Need a machine
+                  <br />
+                  spec'd for your
+                  <br />
+                  output?
+                </h2>
+                <div className="mt-12 hidden lg:block">
+                  <p className="text-sm font-medium text-muted-foreground max-w-sm leading-relaxed">
+                    Share your scale, target output, and location — we'll come back with a recommendation and price tailored to your exact needs.
+                  </p>
+                </div>
+              </div>
+              <div className="bg-muted p-8 md:p-12 border border-border">
+                <ContactForm title="Get a Quote" subtitle="" />
               </div>
             </div>
           </Reveal>

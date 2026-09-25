@@ -20,7 +20,11 @@ interface Product {
 function Products() {
   const { data: products, loading } = useApi<Product[]>("products");
 
-  if (!loading && (!products || products.length === 0)) {
+  if (loading) {
+    return <div className="min-h-[150vh] bg-background" />;
+  }
+
+  if (!products || products.length === 0) {
     return null;
   }
 

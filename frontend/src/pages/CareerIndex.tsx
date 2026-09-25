@@ -18,7 +18,11 @@ export interface CareerRole {
 function Career() {
   const { data: roles, loading } = useApi<CareerRole[]>("career");
 
-  if (!loading && (!roles || roles.length === 0)) {
+  if (loading) {
+    return <div className="min-h-[150vh] bg-background" />;
+  }
+
+  if (!roles || roles.length === 0) {
     return null;
   }
 

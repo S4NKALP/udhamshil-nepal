@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-
-/** Translates its children vertically as the page scrolls. */
+import { motion } from "framer-motion"; /** Translates its children vertically as the page scrolls. */
 export function Parallax({
   speed = 0.15,
   className,
@@ -71,36 +70,19 @@ export function Reveal({
   className?: string;
   children: ReactNode;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <div
-      ref={ref}
+    <motion.div
       className={className}
-      style={{
-        opacity: shown ? 1 : 0,
-        transform: shown ? "none" : "translateY(28px)",
-        transition: `opacity .7s ease ${delay}ms, transform .7s ease ${delay}ms`,
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{
+        duration: 0.8,
+        delay: delay / 1000,
+        ease: [0.22, 1, 0.36, 1],
       }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

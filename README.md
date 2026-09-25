@@ -76,16 +76,16 @@ Content models: `Organization` (singleton with social links/map/hours), `AboutUs
 
 Read-only JSON endpoints (paginated, page size 20):
 
-| Endpoint | Description |
-|---|---|
-| `/api/homepage/hero/`, `/api/homepage/stats/`, `/api/homepage/marquee/` | Homepage sections |
-| `/api/org/about/`, `vision/`, `mision/`, `values/`, `what-we-do/`, `partners/`, `sister-companies/`, `services/`, `organization/` | Organization content |
-| `/api/products/` | Products (with features) |
-| `/api/projects/`, `/api/events/` | Projects & events |
-| `/api/team/` | Team members |
-| `/api/testimonials/` | Testimonials |
-| `/api/career/` | Job listings (filters: `job_time`, `location`; search) |
-| `/api/contact/` | `POST` create (public); list requires admin |
+| Endpoint                                                                                                                          | Description                                            |
+| --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `/api/homepage/hero/`, `/api/homepage/stats/`, `/api/homepage/marquee/`                                                           | Homepage sections                                      |
+| `/api/org/about/`, `vision/`, `mision/`, `values/`, `what-we-do/`, `partners/`, `sister-companies/`, `services/`, `organization/` | Organization content                                   |
+| `/api/products/`                                                                                                                  | Products (with features)                               |
+| `/api/projects/`, `/api/events/`                                                                                                  | Projects & events                                      |
+| `/api/team/`                                                                                                                      | Team members                                           |
+| `/api/testimonials/`                                                                                                              | Testimonials                                           |
+| `/api/career/`                                                                                                                    | Job listings (filters: `job_time`, `location`; search) |
+| `/api/contact/`                                                                                                                   | `POST` create (public); list requires admin            |
 
 ### Website pages (frontend)
 

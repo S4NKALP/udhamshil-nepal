@@ -19,7 +19,11 @@ interface TeamMember {
 function Team() {
   const { data: people, loading } = useApi<TeamMember[]>("team");
 
-  if (!loading && (!people || people.length === 0)) {
+  if (loading) {
+    return <div className="min-h-[150vh] bg-background" />;
+  }
+
+  if (!people || people.length === 0) {
     return null;
   }
 

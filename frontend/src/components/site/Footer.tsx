@@ -28,7 +28,12 @@ export function Footer() {
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 mb-32">
           {/* Logo and Copyright */}
           <div className="flex flex-col lg:w-[35%] shrink-0">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
+              <img
+                src={org?.logo || `${import.meta.env.BASE_URL}logo.png`}
+                alt={org?.name || "UDHAMSIL"}
+                className="w-48 lg:w-64 h-auto object-contain"
+              />
               <span className="font-display text-2xl font-bold tracking-tight">
                 {org?.name || "UDHAMSIL"}
               </span>
@@ -152,10 +157,10 @@ export function Footer() {
                 Legal
               </h4>
               <nav className="flex flex-col gap-4 text-sm font-medium text-background/70">
-                <Link to="#" className="hover:text-background transition-colors">
+                <Link to="/privacy" className="hover:text-background transition-colors">
                   Privacy
                 </Link>
-                <Link to="#" className="hover:text-background transition-colors">
+                <Link to="/terms" className="hover:text-background transition-colors">
                   Terms
                 </Link>
               </nav>

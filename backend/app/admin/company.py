@@ -57,8 +57,10 @@ class OrganizationAdmin(ImagePreviewMixin, SingletonAdmin):
             {
                 "fields": (
                     "address",
-                    ("phone_number", "telephone_number"),
-                    ("primary_email", "secondary_email"),
+                    "phone_number",
+                    "telephone_number",
+                    "primary_email",
+                    "secondary_email",
                     "whatsapp_no",
                 ),
             },
@@ -67,8 +69,10 @@ class OrganizationAdmin(ImagePreviewMixin, SingletonAdmin):
             "Social Media",
             {
                 "fields": (
-                    ("facebook", "tiktok"),
-                    ("instagram", "youtube"),
+                    "facebook",
+                    "tiktok",
+                    "instagram",
+                    "youtube",
                     "linkedin",
                 ),
             },

@@ -29,7 +29,7 @@ function CareerDetail() {
   const { slug } = useParams();
   const { data: role, loading } = useApi<CareerRole>(`career/${slug}`);
 
-  if (loading) return null;
+  if (loading) return <div className="min-h-[150vh] bg-background" />;
 
   if (!role) {
     return <RoleNotFound />;
