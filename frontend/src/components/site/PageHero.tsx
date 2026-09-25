@@ -13,16 +13,18 @@ export function PageHero({
 }) {
   return (
     <section className="relative z-10">
-      <div className="mx-auto max-w-7xl px-6 pb-16 pt-24 md:pb-24 md:pt-32">
-        <Parallax speed={0.06}>
-          <div className="rise flex items-center gap-4 text-xs font-bold uppercase text-brand">
-            <span className="h-px w-12 bg-brand" /> {eyebrow}
+      <div className="mx-auto max-w-7xl px-6 pb-16 pt-32 md:pb-24 md:pt-48">
+        <Parallax speed={0.05}>
+          <div className="rise flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-muted-foreground mb-8">
+            {eyebrow} <span className="h-px w-12 bg-border" />
           </div>
-          <h1 className="rise-2 mt-7 max-w-5xl text-4xl leading-[1.06] md:text-7xl">
-            {title} {highlight && <span className="text-gradient">{highlight}</span>}
+          <h1 className="rise-2 font-display text-[10vw] sm:text-[8vw] lg:text-[7rem] leading-[0.85] tracking-tighter uppercase mb-16">
+            {title} {highlight && <span className="text-brand block">{highlight}</span>}
           </h1>
-          <div className="rise-3 mt-8 grid border-t border-border pt-6 md:grid-cols-12">
-            <p className="max-w-2xl text-lg text-muted-foreground md:col-start-6 md:col-span-7">{description}</p>
+          <div className="rise-3 grid grid-cols-1 md:grid-cols-12 gap-8 border-t border-border pt-8">
+            <p className="md:col-start-7 md:col-span-6 text-sm font-medium leading-relaxed text-foreground uppercase tracking-widest">
+              {description}
+            </p>
           </div>
         </Parallax>
       </div>

@@ -26,30 +26,24 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 inset-x-0 w-full z-50 border-b border-border bg-background/95 backdrop-blur-md transition-all duration-300">
+    <header className="fixed top-0 inset-x-0 w-full z-50 bg-background/90 backdrop-blur-md transition-all duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <nav className="flex h-20 items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center bg-brand font-display font-bold text-primary-foreground">
-              U
-            </span>
+        <nav className="flex h-24 items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-4">
             <span className="leading-tight">
-              <span className="block font-display text-[14px]">UDHAMSIL NEPAL</span>
-              <span className="block text-[10px] uppercase text-muted-foreground">
-                Global Trade Co.
-              </span>
+              <span className="block font-display text-lg tracking-wide">UDHAMSIL</span>
             </span>
           </Link>
 
-          <div className="hidden h-full items-center gap-7 text-sm font-semibold text-muted-foreground lg:flex">
+          <div className="hidden h-full items-center gap-8 text-xs font-medium uppercase tracking-widest text-muted-foreground lg:flex">
             {links.map((l) => (
               <NavLink
                 key={l.to}
                 to={l.to}
                 end={l.to === "/"}
                 className={({ isActive }) =>
-                  `flex h-full items-center border-b-2 transition-colors hover:text-brand ${
-                    isActive ? "border-brand text-ink" : "border-transparent"
+                  `flex h-full items-center transition-colors hover:text-foreground ${
+                    isActive ? "text-foreground font-bold" : ""
                   }`
                 }
               >
@@ -58,12 +52,12 @@ export function Header() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Link
               to="/contact"
-               className="hidden rounded-full bg-brand px-6 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:scale-105 hover:bg-brand/90 sm:inline-block"
+              className="hidden text-xs font-bold uppercase tracking-widest text-foreground transition-opacity hover:opacity-70 sm:inline-block"
             >
-              Get a Quote
+              Contact
             </Link>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>

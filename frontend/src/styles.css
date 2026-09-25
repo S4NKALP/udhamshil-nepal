@@ -35,8 +35,8 @@
   --color-brand: var(--brand);
   --color-ink: var(--ink);
   --color-mist: var(--mist);
-  --font-display: "Archivo Black", sans-serif;
-  --font-sans: "Hind", sans-serif;
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 :root {

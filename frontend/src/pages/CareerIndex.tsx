@@ -32,22 +32,22 @@ function Career() {
         description="We hire people who care about the details — precise hands, clear communication and a habit of finishing the job."
       />
 
-      <section className="relative z-10">
-        <div className="mx-auto max-w-7xl px-6 pb-24">
-           <div className="divide-y divide-border overflow-hidden border-y border-border bg-background">
+      <section className="relative z-10 border-t border-border mt-16 pt-16">
+        <div className="mx-auto max-w-7xl px-6 pb-32">
+           <div className="flex flex-col gap-0 border-t-2 border-foreground">
             {roles?.map((role, i) => (
               <Reveal key={role.id} delay={i * 70}>
-                <div className="flex flex-wrap items-center justify-between gap-4 p-7">
-                  <div>
-                    <h2 className="text-xl font-bold">{role.name}</h2>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
-                      {role.job_time} · {role.location}
+                <div className="flex flex-wrap items-start md:items-center justify-between gap-8 py-10 border-b border-border hover:bg-muted/30 transition-colors">
+                  <div className="flex-1">
+                    <p className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      {role.job_time} <span className="mx-2">—</span> {role.location}
                     </p>
-                    <p className="mt-2 max-w-lg text-sm text-muted-foreground">{role.short_info}</p>
+                    <h2 className="text-3xl font-display font-black tracking-tighter uppercase">{role.name}</h2>
+                    <p className="mt-4 max-w-lg text-sm font-medium leading-relaxed text-muted-foreground">{role.short_info}</p>
                   </div>
                   <Link
                     to={`/career/${role.id}`}
-                    className="bg-ink px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-brand"
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-background bg-foreground px-8 py-4 hover:bg-foreground/80 transition-colors shrink-0"
                   >
                     View role
                   </Link>
@@ -55,7 +55,7 @@ function Career() {
               </Reveal>
             ))}
           </div>
-          <p className="mt-8 text-sm text-muted-foreground">
+          <p className="mt-12 text-sm font-bold uppercase tracking-widest text-muted-foreground">
             Don't see your role? Send your CV through the contact page and we'll keep it on file.
           </p>
         </div>

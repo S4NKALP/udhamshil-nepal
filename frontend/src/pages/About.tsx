@@ -67,25 +67,23 @@ function About() {
 
       {about && (
       <section className="relative z-10">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 pb-24 lg:grid-cols-12">
+        <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 pb-32 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Parallax speed={0.1}>
-               <div className="group overflow-hidden rounded-3xl border border-border/50 bg-card p-2 shadow-2xl transition-all hover:shadow-brand/10">
+               <div className="group overflow-hidden bg-muted aspect-[4/5] w-full">
                 <img
-                  src={about.cover_image }
+                  src={about.cover_image}
                   loading="lazy"
-                  width={1024}
-                  height={1152}
                   alt={about.title}
-                   className="aspect-[4/5] w-full rounded-2xl object-cover transition duration-700 group-hover:scale-105"
+                   className="w-full h-full object-cover grayscale transition duration-1000 group-hover:grayscale-0 group-hover:scale-105"
                 />
               </div>
             </Parallax>
           </div>
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 lg:pl-12">
             <Reveal>
-              <h2 className="text-4xl font-black tracking-tight md:text-5xl">{about.title}</h2>
-              <div className="mt-5 text-muted-foreground prose prose-invert" dangerouslySetInnerHTML={{ __html: about.about_us }} />
+              <h2 className="text-4xl font-display font-black tracking-tighter uppercase md:text-6xl">{about.title}</h2>
+              <div className="mt-8 text-base leading-relaxed text-muted-foreground prose prose-invert max-w-2xl" dangerouslySetInnerHTML={{ __html: about.about_us }} />
             </Reveal>
           </div>
         </div>
@@ -93,90 +91,65 @@ function About() {
       )}
 
       {vision && (
-      <section className="relative z-10">
-        <div className="mx-auto max-w-7xl px-6 pb-24">
+      <section className="relative z-10 border-t border-border mt-16 pt-32">
+        <div className="mx-auto max-w-7xl px-6 pb-32">
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-brand">Vision</p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">{vision.title}</h2>
-          </Reveal>
-          <div className="mt-10 grid items-center gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <Reveal>
-                 <div className="border-l-4 border-brand bg-mist p-10">
-                   <span className="inline-flex h-12 w-12 items-center justify-center border border-brand/30 bg-background text-brand">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                  </span>
-                  <div className="mt-6 text-xl font-medium leading-relaxed md:text-2xl prose prose-invert" dangerouslySetInnerHTML={{ __html: vision.vision }} />
-                </div>
-              </Reveal>
-            </div>
-            {vision.subtitle && (
-            <div className="lg:col-span-5">
-              <Parallax speed={0.08}>
-                <Reveal delay={100}>
-                  <p className="text-muted-foreground">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+              <div className="lg:col-span-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">01 — Vision</p>
+                <h2 className="text-4xl font-display font-black tracking-tighter uppercase">{vision.title}</h2>
+                {vision.subtitle && (
+                  <p className="mt-6 text-sm font-medium text-foreground uppercase tracking-widest">
                     {vision.subtitle}
                   </p>
-                </Reveal>
-              </Parallax>
+                )}
+              </div>
+              <div className="lg:col-span-8 lg:pl-12">
+                <div className="text-2xl md:text-4xl font-display font-bold uppercase tracking-tight leading-tight text-foreground/80 prose prose-invert" dangerouslySetInnerHTML={{ __html: vision.vision }} />
+              </div>
             </div>
-            )}
-          </div>
+          </Reveal>
         </div>
       </section>
       )}
 
       {mision && (
-      <section className="relative z-10">
-        <div className="mx-auto max-w-7xl px-6 pb-24">
+      <section className="relative z-10 border-t border-border pt-32">
+        <div className="mx-auto max-w-7xl px-6 pb-32">
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-brand">Mission</p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">{mision.title}</h2>
-          </Reveal>
-          <div className="mt-10 grid items-center gap-10 lg:grid-cols-12">
-            {mision.subtitle && (
-            <div className="order-2 lg:order-1 lg:col-span-5">
-              <Parallax speed={0.06}>
-                <Reveal delay={100}>
-                  <p className="text-muted-foreground">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+              <div className="lg:col-span-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">02 — Mission</p>
+                <h2 className="text-4xl font-display font-black tracking-tighter uppercase">{mision.title}</h2>
+                {mision.subtitle && (
+                  <p className="mt-6 text-sm font-medium text-foreground uppercase tracking-widest">
                     {mision.subtitle}
                   </p>
-                </Reveal>
-              </Parallax>
+                )}
+              </div>
+              <div className="lg:col-span-8 lg:pl-12">
+                <div className="text-2xl md:text-4xl font-display font-bold uppercase tracking-tight leading-tight text-foreground/80 prose prose-invert" dangerouslySetInnerHTML={{ __html: mision.mision }} />
+              </div>
             </div>
-            )}
-            <div className="order-1 lg:order-2 lg:col-span-7">
-              <Reveal>
-                 <div className="border-r-4 border-brand bg-mist p-10">
-                   <span className="inline-flex h-12 w-12 items-center justify-center border border-brand/30 bg-background text-brand">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                  </span>
-                  <div className="mt-6 text-xl font-medium leading-relaxed md:text-2xl prose prose-invert" dangerouslySetInnerHTML={{ __html: mision.mision }} />
-                </div>
-              </Reveal>
-            </div>
-          </div>
+          </Reveal>
         </div>
       </section>
       )}
 
       {values && values.length > 0 && (
-      <section className="relative z-10">
-        <div className="mx-auto max-w-7xl px-6 pb-24">
+      <section className="relative z-10 border-t border-border pt-32">
+        <div className="mx-auto max-w-7xl px-6 pb-32">
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-brand">Values</p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">What we stand for</h2>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
-              The principles behind every machine we export, manufacture and supply.
-            </p>
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">03 — Values</p>
+            <h2 className="text-5xl font-display font-black tracking-tighter uppercase md:text-7xl">What we stand for.</h2>
           </Reveal>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-24 grid gap-16 md:grid-cols-2 lg:grid-cols-4">
             {values.map((val, index) => (
               <Reveal key={val.id} delay={index * 80}>
-                 <div className="h-full border-t-2 border-brand bg-mist p-8">
-                  <span className="text-4xl font-bold text-brand/30">{String(index + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-4 text-lg font-bold">{val.title}</h3>
-                  <div className="mt-3 text-sm leading-relaxed text-muted-foreground prose prose-invert" dangerouslySetInnerHTML={{ __html: val.values }} />
+                 <div className="border-t-2 border-foreground pt-8">
+                  <span className="text-4xl font-display font-black text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+                  <h3 className="mt-6 text-xl font-display font-black uppercase tracking-tight">{val.title}</h3>
+                  <div className="mt-4 text-sm font-medium leading-relaxed text-muted-foreground prose prose-invert" dangerouslySetInnerHTML={{ __html: val.values }} />
                 </div>
               </Reveal>
             ))}

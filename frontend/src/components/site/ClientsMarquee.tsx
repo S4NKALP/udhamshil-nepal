@@ -59,10 +59,10 @@ export function ClientsMarquee({
               <img
                 src={client.logo}
                 alt={client.name}
-                className="h-16 w-32 object-contain filter grayscale transition-all duration-300 group-hover:grayscale-0 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                className="h-16 w-32 object-contain transition-all duration-300 hover:scale-110 opacity-90 hover:opacity-100"
               />
             ) : (
-              <span className="text-xl font-bold tracking-widest text-muted-foreground transition-colors group-hover:text-brand">
+              <span className="text-xl font-bold tracking-widest text-muted-foreground transition-colors group-hover:text-foreground">
                 {client.name}
               </span>
             )}
